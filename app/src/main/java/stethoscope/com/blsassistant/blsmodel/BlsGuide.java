@@ -2,13 +2,17 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 
 public class BlsGuide implements BlsTemplate{
     private String guideTitle;
@@ -30,7 +34,7 @@ public class BlsGuide implements BlsTemplate{
     }
 
     @Override
-    public void setView(View v, int index, Context ctx) {
+    public void setView(View v, int index, Context ctx, Handler handler) {
         try{
 
             if (checkBlsDataRep(index)){
@@ -51,9 +55,15 @@ public class BlsGuide implements BlsTemplate{
                 Drawable d = Drawable.createFromStream(ims, null);
                 mImage.setImageDrawable(d);
 
-
-
                 //set buttons
+                Button nextStepButton = (Button) v.findViewById(
+                        ctx.getResources().getIdentifier("guide_button_next_step", "id", ctx.getPackageName()));
+                nextStepButton.setOnClickListener(new NextStepButtonListener(handler));
+
+                Button lastStepButton = (Button) v.findViewById(
+                        ctx.getResources().getIdentifier("guide_button_last_step", "id", ctx.getPackageName()));
+                lastStepButton.setOnClickListener(new LastStepButtonListener(handler));
+
             }
         } catch (IOException e){
 
@@ -101,26 +111,32 @@ public class BlsGuide implements BlsTemplate{
     }
 
     private class NextStepButtonListener implements View.OnClickListener{
+        private Handler mHandler;
 
-        public NextStepButtonListener(){
-
+        public NextStepButtonListener(Handler mHandler){
+            this.mHandler = mHandler;
         }
 
         @Override
         public void onClick(View v) {
-
+            Message msg = new Message();
+            msg.what = 1;
+            mHandler.sendMessage(msg);
         }
     }
 
     private class LastStepButtonListener implements View.OnClickListener{
+        private Handler mHandler;
 
-        public LastStepButtonListener(){
-            
+        public LastStepButtonListener(Handler mHandler){
+            this.mHandler = mHandler;
         }
 
         @Override
         public void onClick(View v) {
-
+            Message msg = new Message();
+            msg.what = 2;
+            mHandler.sendMessage(msg);
         }
     }
 }

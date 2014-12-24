@@ -1,6 +1,8 @@
 package stethoscope.com.blsassistant;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
+import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
 
 
@@ -136,12 +139,17 @@ public class MainActivity extends ActionBarActivity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         private static final String ARG_FRAGMENT_TYPE = "fragment_type";
+
+        //message constants
+        public static final int MESSAGE_NEXT_STEP = 1;
+        public static final int MESSAGE_LAST_STEP = 2;
 
         private static int fragmentType;
         private static BlsTemplate fragTemplate;
         private static int currentIndex;
+
+        private Handler fragHandler;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -151,6 +159,7 @@ public class MainActivity extends ActionBarActivity
             fragmentType = type;
             fragTemplate = template;
             currentIndex = 0;
+
 
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -187,10 +196,33 @@ public class MainActivity extends ActionBarActivity
         public void onActivityCreated (Bundle savedInstanceState){
             super.onActivityCreated(savedInstanceState);
 
+
+            fragHandler = new fragMessageHandler();
             //set starting view
-            fragTemplate.setView(getView(), 0, getActivity());
+            fragTemplate.setView(getView(), 0, getActivity(), fragHandler);
             String fragTitle = fragTemplate.getDataTitle(0);
             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+        }
+
+        private class fragMessageHandler extends Handler{
+            int maxStepCount = 0;
+            @Override
+            public void handleMessage(Message msg){
+                switch(msg.what){
+                    case MESSAGE_NEXT_STEP:
+                        maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
+                        if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0)
+                            fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
+
+                        break;
+                    case MESSAGE_LAST_STEP:
+                        maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
+                        if (currentIndex > 0 && currentIndex < maxStepCount && getView() != null && getActivity() != null)
+                            fragTemplate.setView(getView(), --currentIndex, getActivity(), fragHandler);
+                        break;
+                    default:
+                }
+            }
         }
     }
 
