@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/last_step"
                     android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_blue" style="@style/ButtonText"
                     />
                 <Button
                     android:id="@+id/guide_button_next_step"
@@ -97,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/next_step"
                     android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_blue" style="@style/ButtonText"
                     />
             </RelativeLayout>
 
