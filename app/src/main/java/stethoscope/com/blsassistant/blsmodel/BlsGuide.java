@@ -99,4 +99,28 @@ public class BlsGuide implements BlsTemplate{
 
         return true;
     }
+
+    private class NextStepButtonListener implements View.OnClickListener{
+
+        public NextStepButtonListener(){
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+    private class LastStepButtonListener implements View.OnClickListener{
+
+        public LastStepButtonListener(){
+            
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
 }

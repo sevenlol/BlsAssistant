@@ -18,9 +18,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
+import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
+
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+
+    /*
+     *  Constants
+     */
+    public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
+    //public static final String FRAGMENT_TITLE_ARRAY_FLAG = "fragment_title_array";
+    public static final String CURRENT_FRAGMENT = "current_fragment";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -32,9 +43,17 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+    //BlsTemplate data array
+    private BlsTemplate[] templateDataArr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //read json files
+        BlsDataReader tmpReader = new BlsDataReader(this);
+        templateDataArr = tmpReader.getTemplates();
+
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -45,29 +64,31 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        //update nav drawer titles
+        String[] titleList = new String[templateDataArr.length];
+        for (int i=0;i<templateDataArr.length;i++)
+            titleList[i] = templateDataArr[i].getTitle();
+        mNavigationDrawerFragment.updateTitleList(titleList);
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                position + 1,
+                DETAIL_FRAGMENT_TYPE_BLSGUIDE,
+                templateDataArr[position]);
+        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
+    public void onSectionAttached(String title) {
+        //set detail fragment title
+        mTitle = title;
     }
 
     public void restoreActionBar() {
@@ -116,17 +137,29 @@ public class MainActivity extends ActionBarActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private static final String ARG_FRAGMENT_TYPE = "fragment_type";
+
+        private static int fragmentType;
+        private static BlsTemplate fragTemplate;
+        private static int currentIndex;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+        public static PlaceholderFragment newInstance(int sectionNumber, int type, BlsTemplate template) {
+            fragmentType = type;
+            fragTemplate = template;
+            currentIndex = 0;
+
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_FRAGMENT_TYPE, type);
             fragment.setArguments(args);
             return fragment;
         }
+
 
         public PlaceholderFragment() {
         }
@@ -134,15 +167,30 @@ public class MainActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_blsdetail, container, false);
-            return rootView;
+            // return view from the appropriate layout file
+            switch(fragmentType){
+                case DETAIL_FRAGMENT_TYPE_BLSGUIDE:
+                    return inflater.inflate(R.layout.layout_blsguide, container, false);
+                default:
+                    return inflater.inflate(R.layout.fragment_blsdetail, container, false);
+            }
         }
 
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+            //((MainActivity) activity).onSectionAttached(
+            //        getArguments().getInt(ARG_SECTION_NUMBER),getArguments().getInt(ARG_FRAGMENT_TYPE));
+        }
+
+        @Override
+        public void onActivityCreated (Bundle savedInstanceState){
+            super.onActivityCreated(savedInstanceState);
+
+            //set starting view
+            fragTemplate.setView(getView(), 0, getActivity());
+            String fragTitle = fragTemplate.getDataTitle(0);
+            ((MainActivity) getActivity()).onSectionAttached(fragTitle);
         }
     }
 
