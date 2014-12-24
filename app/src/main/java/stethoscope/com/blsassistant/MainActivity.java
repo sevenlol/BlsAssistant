@@ -92,6 +92,7 @@ public class MainActivity extends ActionBarActivity
     public void onSectionAttached(String title) {
         //set detail fragment title
         mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
     }
 
     public void restoreActionBar() {
@@ -209,16 +210,24 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void handleMessage(Message msg){
                 switch(msg.what){
-                    case MESSAGE_NEXT_STEP:
+                    case MESSAGE_NEXT_STEP: //next step click event for BlsGuide
                         maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
-                        if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0)
+                        if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0){
                             fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
+                            String fragTitle = fragTemplate.getDataTitle(currentIndex);
+                            ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                        }
+
 
                         break;
-                    case MESSAGE_LAST_STEP:
+                    case MESSAGE_LAST_STEP: //last step click event for BlsGuide
                         maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
-                        if (currentIndex > 0 && currentIndex < maxStepCount && getView() != null && getActivity() != null)
+                        if (currentIndex > 0 && currentIndex < maxStepCount && getView() != null && getActivity() != null){
                             fragTemplate.setView(getView(), --currentIndex, getActivity(), fragHandler);
+                            String fragTitle = fragTemplate.getDataTitle(currentIndex);
+                            ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                        }
+
                         break;
                     default:
                 }

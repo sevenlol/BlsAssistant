@@ -16,25 +16,49 @@
             android:id="@+id/guide_wrapper_functions"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
 
-            <Button
-                android:id="@+id/guide_button_call"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1">
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/guide_button_voice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8">
+
+                <Button
+                    android:id="@+id/guide_button_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/call_button"/>
+
+                <Button
+                    android:id="@+id/guide_button_voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/voice_button"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1">
+            </LinearLayout>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/guide_image"
-            android:layout_width="500px"
-            android:layout_height="400px"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/guide_text"
@@ -46,17 +70,48 @@
             android:id="@+id/guide_wrapper_steps"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:weightSum="1">
 
-            <Button
-                android:id="@+id/guide_button_last_step"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1">
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/guide_button_next_step"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:id="@+id/guide_button_left_relative_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".8">
+                <Button
+                    android:id="@+id/guide_button_last_step"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_step"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button
+                    android:id="@+id/guide_button_next_step"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next_step"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1">
+            </LinearLayout>
+
+
+
 
         </LinearLayout>
 
