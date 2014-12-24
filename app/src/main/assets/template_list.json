@@ -1,0 +1,17 @@
+{
+	"template" : 
+	[
+		{
+			"title" : "CPR",
+			"filename" : "cpr.json",
+			"type" : "guide",
+			"path" : "cpr/"
+		},
+		{
+			"title" : "Burn Injury",
+			"filename" : "burn_injury.json",
+			"type" : "guide",
+			"path" : "burn_injury/"
+		}
+	]
+}

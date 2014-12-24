@@ -1,0 +1,35 @@
+{
+	"data" :
+	[
+		{
+			"title" : "Check",
+			"url" : ["cpr/step1.jpg"],
+			"description" : ["Check if the victim is concious."],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "Call",
+			"url" : ["cpr/step2.jpg"],
+			"description" : ["Call for help."],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "Compressions",
+			"url" : ["cpr/step3.jpg"],
+			"description" : ["Compression description."],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "Airway",
+			"url" : ["cpr/step4.jpg"],
+			"description" : ["Airway description."],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "Breathing",
+			"url" : ["step5.jpg"],
+			"description" : ["Now kiss."],
+			"order" : ["url", "description"]
+		}
+	]
+}
