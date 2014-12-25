@@ -10,6 +10,8 @@ public class BlsTemplateFactory {
 
         if (type.equalsIgnoreCase("GUIDE"))
             return new BlsGuide(title, data);
+        else if (type.equalsIgnoreCase("MAP"))
+            return new BlsMap();
         else if (type.equalsIgnoreCase("TEST_GUIDE")){
             //test object for BlsGuide
             BlsData[] testBlsData = new BlsData[1];

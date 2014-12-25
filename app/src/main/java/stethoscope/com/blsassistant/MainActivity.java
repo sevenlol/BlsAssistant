@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
+import stethoscope.com.blsassistant.blsmodel.BlsMap;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
 
 
@@ -33,6 +34,7 @@ public class MainActivity extends ActionBarActivity
      *  Constants
      */
     public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
+    public static final int DETAIL_FRAGMENT_TYPE_BLSMAP = 2;
     //public static final String FRAGMENT_TITLE_ARRAY_FLAG = "fragment_title_array";
     public static final String CURRENT_FRAGMENT = "current_fragment";
 
@@ -77,11 +79,16 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        int templateType = -1;
+        if (templateDataArr[position] instanceof BlsGuide)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
+        else if (templateDataArr[position] instanceof BlsMap)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
                 position + 1,
-                DETAIL_FRAGMENT_TYPE_BLSGUIDE,
+                templateType,
                 templateDataArr[position]);
         //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
         fragmentManager.beginTransaction()
@@ -181,6 +188,8 @@ public class MainActivity extends ActionBarActivity
             switch(fragmentType){
                 case DETAIL_FRAGMENT_TYPE_BLSGUIDE:
                     return inflater.inflate(R.layout.layout_blsguide, container, false);
+                case DETAIL_FRAGMENT_TYPE_BLSMAP:
+                    return inflater.inflate(R.layout.layout_blsmap, container, false);
                 default:
                     return inflater.inflate(R.layout.fragment_blsdetail, container, false);
             }

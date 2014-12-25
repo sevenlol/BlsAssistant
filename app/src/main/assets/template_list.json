@@ -12,6 +12,12 @@
 			"filename" : "burn_injury.json",
 			"type" : "guide",
 			"path" : "burn_injury/"
+		},
+		{
+		    "title" : "AED Map",
+            "filename" : "map_view.json",
+            "type" : "map",
+            "path" : "google_map_web/"
 		}
 	]
 }
