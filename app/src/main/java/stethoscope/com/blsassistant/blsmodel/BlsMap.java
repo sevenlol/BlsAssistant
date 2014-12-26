@@ -23,6 +23,6 @@ public class BlsMap implements BlsTemplate{
 
     @Override
     public String getTitle() {
-        return "Google Map Test Title";
+        return "AED Map";
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="drawer_pressed">#4F5241</drawable>
+    <drawable name="drawer_selected">#565457</drawable>
+    <drawable name="drawer_normal">#FFFF</drawable>
+</resources>

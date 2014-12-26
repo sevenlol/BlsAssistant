@@ -56,18 +56,14 @@ public class BlsGuide implements BlsTemplate{
                 mImage.setImageDrawable(d);
 
 
-                Log.d("MaxStep", "" + guideData.length);
-                Log.d("CurrentStep", "" + index);
                 //set next step button
                 Button nextStepButton = (Button) v.findViewById(
                         ctx.getResources().getIdentifier("guide_button_next_step", "id", ctx.getPackageName()));
                 if (guideData != null && index != (guideData.length-1)){
                     nextStepButton.setOnClickListener(new NextStepButtonListener(handler));
                     nextStepButton.setEnabled(true);
-                    Log.d("GuideData", "" + guideData.length + "," + index );
                 }
                 else{
-                    Log.d("GuideData", "" + guideData.length + "," + index );
                     nextStepButton.setEnabled(false);
                 }
 

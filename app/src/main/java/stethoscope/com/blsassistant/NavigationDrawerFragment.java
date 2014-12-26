@@ -1,5 +1,8 @@
 package stethoscope.com.blsassistant;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -110,6 +113,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -205,12 +209,17 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public void updateTitleList(String[] titleList){
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
+                R.layout.layout_list_item,
+                R.id.text1,
                 titleList
         ));
+
+
+
+
     }
 
     @Override
