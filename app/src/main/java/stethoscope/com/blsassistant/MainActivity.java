@@ -78,6 +78,9 @@ public class MainActivity extends ActionBarActivity
         for (int i=0;i<templateDataArr.length;i++)
             titleList[i] = templateDataArr[i].getTitle();
         mNavigationDrawerFragment.updateTitleList(titleList);
+
+        //ActionBar bar = getActionBar();
+        //bar.setBackgroundDrawable(new ColorDrawable("COLOR"));
     }
 
     @Override
