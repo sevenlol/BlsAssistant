@@ -6,118 +6,119 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
 
-    <LinearLayout
-        android:id="@+id/guide_wrapper_parent"
+    <RelativeLayout
+        android:id="@+id/guide_wrapper_parent_top"
+        android:paddingTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerVertical"
+            android:layout_alignParentBottom="true"/>
+        <View
+            android:id="@+id/ViewColorPickerHelperTop"
+            android:layout_width="1dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical"
+            android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/guide_button_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/ViewColorPickerHelperTop"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/call_button"
+            android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/guide_button_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/voice_button"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/ViewColorPickerHelperTop"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/guide_wrapper_parent_mid"
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/guide_wrapper_functions"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1">
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".8">
-
-                <Button
-                    android:id="@+id/guide_button_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="@string/call_button"/>
-
-                <Button
-                    android:id="@+id/guide_button_voice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/voice_button"/>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1">
-            </LinearLayout>
-
-        </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guide_wrapper_parent_top">
 
         <ImageView
             android:id="@+id/guide_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:layout_alignParentTop="true"/>
 
         <TextView
             android:id="@+id/guide_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_below="@id/guide_image"/>
 
-        <LinearLayout
-            android:id="@+id/guide_wrapper_steps"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/guide_wrapper_parent_bot"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="?android:attr/dividerVertical"
+            android:layout_alignParentTop="true"/>
+        <View
+            android:id="@+id/ViewColorPickerHelper"
+            android:layout_width="1dip"
             android:layout_height="wrap_content"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1">
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/guide_button_left_relative_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".8">
-                <Button
-                    android:id="@+id/guide_button_last_step"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/last_step"
-                    android:layout_alignParentLeft="true"
-                    />
-                <!--android:background="@drawable/btn_blue" style="@style/ButtonText"-->
-                <Button
-                    android:id="@+id/guide_button_next_step"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/next_step"
-                    android:layout_alignParentRight="true"
-                    />
-
-                <!--android:background="@drawable/btn_blue" style="@style/ButtonText"-->
-            </RelativeLayout>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="?android:attr/dividerVertical"
+            android:layout_centerHorizontal="true"/>
+        <Button
+            android:id="@+id/guide_button_last_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@id/ViewColorPickerHelper"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/last_step"
+            android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/guide_button_next_step"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/next_step"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/ViewColorPickerHelper"/>
+    </RelativeLayout>
 
 
-
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".1">
-            </LinearLayout>
-
-
-
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 </RelativeLayout>
