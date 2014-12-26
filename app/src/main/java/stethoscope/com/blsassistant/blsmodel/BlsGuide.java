@@ -55,14 +55,33 @@ public class BlsGuide implements BlsTemplate{
                 Drawable d = Drawable.createFromStream(ims, null);
                 mImage.setImageDrawable(d);
 
-                //set buttons
+
+                Log.d("MaxStep", "" + guideData.length);
+                Log.d("CurrentStep", "" + index);
+                //set next step button
                 Button nextStepButton = (Button) v.findViewById(
                         ctx.getResources().getIdentifier("guide_button_next_step", "id", ctx.getPackageName()));
-                nextStepButton.setOnClickListener(new NextStepButtonListener(handler));
+                if (guideData != null && index != (guideData.length-1)){
+                    nextStepButton.setOnClickListener(new NextStepButtonListener(handler));
+                    nextStepButton.setEnabled(true);
+                    Log.d("GuideData", "" + guideData.length + "," + index );
+                }
+                else{
+                    Log.d("GuideData", "" + guideData.length + "," + index );
+                    nextStepButton.setEnabled(false);
+                }
 
+
+                //set last step button
                 Button lastStepButton = (Button) v.findViewById(
                         ctx.getResources().getIdentifier("guide_button_last_step", "id", ctx.getPackageName()));
-                lastStepButton.setOnClickListener(new LastStepButtonListener(handler));
+                if (index != 0){
+                    lastStepButton.setOnClickListener(new LastStepButtonListener(handler));
+                    lastStepButton.setEnabled(true);
+                }
+                else
+                    lastStepButton.setEnabled(false);
+
 
             }
         } catch (IOException e){

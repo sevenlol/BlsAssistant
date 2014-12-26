@@ -27,7 +27,7 @@
 		},
 		{
 			"title" : "Breathing",
-			"url" : ["step5.jpg"],
+			"url" : ["cpr/step5.jpg"],
 			"description" : ["Now kiss."],
 			"order" : ["url", "description"]
 		}

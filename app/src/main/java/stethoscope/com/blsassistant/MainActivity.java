@@ -10,10 +10,13 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
@@ -149,6 +152,10 @@ public class MainActivity extends ActionBarActivity
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_FRAGMENT_TYPE = "fragment_type";
 
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 250;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
         //message constants
         public static final int MESSAGE_NEXT_STEP = 1;
         public static final int MESSAGE_LAST_STEP = 2;
@@ -158,6 +165,8 @@ public class MainActivity extends ActionBarActivity
         private static int currentIndex;
 
         private Handler fragHandler;
+
+        private GestureDetector gestureDetector;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -212,6 +221,66 @@ public class MainActivity extends ActionBarActivity
             fragTemplate.setView(getView(), 0, getActivity(), fragHandler);
             String fragTitle = fragTemplate.getDataTitle(0);
             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+
+            gestureDetector = new GestureDetector(getActivity(),new MyGestureDetector());
+
+            getView().setOnTouchListener(new fragOnTouchListener());
+        }
+
+        private class fragOnTouchListener implements View.OnTouchListener{
+
+
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+
+
+        }
+
+        private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                try {
+                    int maxStepCount;
+                    if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                        return false;
+                    // right to left swipe
+                    if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        // Left swipe in blsguide == next step
+                        if (fragTemplate instanceof BlsGuide){
+                            maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
+                            if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0){
+                                fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
+                                String fragTitle = fragTemplate.getDataTitle(currentIndex);
+                                ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                            }
+                        }
+
+
+                    }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                        // Right swipe in blsguide == last step
+                        if (fragTemplate instanceof BlsGuide){
+                            maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
+                            if (currentIndex > 0 && currentIndex < maxStepCount && getView() != null && getActivity() != null){
+                                fragTemplate.setView(getView(), --currentIndex, getActivity(), fragHandler);
+                                String fragTitle = fragTemplate.getDataTitle(currentIndex);
+                                ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    // nothing
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
         }
 
         private class fragMessageHandler extends Handler{
@@ -221,8 +290,10 @@ public class MainActivity extends ActionBarActivity
                 switch(msg.what){
                     case MESSAGE_NEXT_STEP: //next step click event for BlsGuide
                         maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
+
                         if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0){
                             fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
+
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
                         }

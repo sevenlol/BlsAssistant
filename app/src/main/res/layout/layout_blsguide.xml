@@ -4,6 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/background_material_light"
     tools:context=".MainActivity$PlaceholderFragment">
 
     <RelativeLayout
@@ -52,26 +53,36 @@
     </RelativeLayout>
 
     <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:cardview="http://schemas.android.com/apk/res-auto"
         android:id="@+id/guide_wrapper_parent_mid"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        cardview:cardBackgroundColor="@color/bright_foreground_inverse_material_light"
+        cardview:contentPadding="5dip"
         android:layout_below="@id/guide_wrapper_parent_top">
 
-        <ImageView
-            android:id="@+id/guide_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:layout_alignParentTop="true"/>
 
-        <TextView
-            android:id="@+id/guide_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/guide_image"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/guide_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:layout_alignParentTop="true"/>
+
+            <TextView
+                android:id="@+id/guide_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/guide_image"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
