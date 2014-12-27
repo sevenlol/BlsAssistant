@@ -18,7 +18,7 @@ public class BlsMap implements BlsTemplate{
 
     @Override
     public String getDataTitle(int index) {
-        return "Test Data Title";
+        return "AED Map";
     }
 
     @Override

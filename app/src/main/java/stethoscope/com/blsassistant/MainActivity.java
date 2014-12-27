@@ -184,6 +184,8 @@ public class MainActivity extends ActionBarActivity
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static final String ARG_FRAGMENT_TYPE = "fragment_type";
 
+
+        //constants for swipe event
         private static final int SWIPE_MIN_DISTANCE = 120;
         private static final int SWIPE_MAX_OFF_PATH = 250;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
