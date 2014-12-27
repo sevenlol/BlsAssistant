@@ -3,6 +3,7 @@ package stethoscope.com.blsassistant;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
@@ -30,7 +33,8 @@ import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                    SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{
 
 
     /*
@@ -141,6 +145,32 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        //not using this
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        //real-time search
+        Log.d("Search","CHANGE: " + newText);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        //searchview expanded
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item) {
+        //searchview close
+        Log.d("Search","CLOSE.");
+        return true;
     }
 
     /**

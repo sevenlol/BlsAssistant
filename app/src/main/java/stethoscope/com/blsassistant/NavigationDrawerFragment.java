@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.support.v7.app.ActionBar;
@@ -52,6 +53,9 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private NavigationDrawerCallbacks mCallbacks;
 
+    private MenuItemCompat.OnActionExpandListener mSearchCloseListener;
+
+
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
@@ -60,6 +64,7 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
+    private MenuItem mItem;
 
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
@@ -93,6 +98,7 @@ public class NavigationDrawerFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
+        Log.d("Search","onActivityCreated.");
         setHasOptionsMenu(true);
     }
 
@@ -220,10 +226,6 @@ public class NavigationDrawerFragment extends Fragment {
                 R.id.text1,
                 titleList
         ));
-
-
-
-
     }
 
     @Override
@@ -231,6 +233,9 @@ public class NavigationDrawerFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
+            mSearchCloseListener = (MenuItemCompat.OnActionExpandListener) activity;
+            Log.d("Search", "onAttach.");
+
         } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
@@ -240,6 +245,7 @@ public class NavigationDrawerFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = null;
+        mSearchCloseListener = null;
     }
 
     @Override
@@ -259,7 +265,7 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
-
+        Log.d("Search", "onCreateOptionsMenu.");
         if (mDrawerLayout != null)
         if (isDrawerOpen()) {
             inflater.inflate(R.menu.global, menu);
@@ -268,9 +274,15 @@ public class NavigationDrawerFragment extends Fragment {
         }
         else{
             SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-            SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+            mItem = menu.findItem(R.id.search);
+            SearchView search = (SearchView) mItem.getActionView();
             search.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
+            search.setOnQueryTextListener((SearchView.OnQueryTextListener) getActivity());
             search.setIconifiedByDefault(false);//search auto focus
+            if (mItem != null && mSearchCloseListener != null){
+                MenuItemCompat.setOnActionExpandListener(mItem, mSearchCloseListener);
+                Log.d("Search","ActionExpandLister Attached.");
+            }
            // search.setSubmitButtonEnabled(true);//commit button
         }
         super.onCreateOptionsMenu(menu, inflater);
