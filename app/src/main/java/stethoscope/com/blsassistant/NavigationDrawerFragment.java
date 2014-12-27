@@ -259,15 +259,20 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
-        if (mDrawerLayout != null && isDrawerOpen()) {
+
+        if (mDrawerLayout != null)
+        if (isDrawerOpen()) {
             inflater.inflate(R.menu.global, menu);
             showGlobalContextActionBar();
 
-
         }
-        SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
-        search.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
+        else{
+            SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+            SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+            search.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
+            search.setIconifiedByDefault(false);//search auto focus
+           // search.setSubmitButtonEnabled(true);//commit button
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
