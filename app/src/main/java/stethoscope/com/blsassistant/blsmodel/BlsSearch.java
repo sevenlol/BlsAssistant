@@ -2,6 +2,8 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
@@ -11,6 +13,10 @@ public class BlsSearch implements BlsTemplate {
     private String[] resultTitleArr; //title of results
     private int[] resultIndexArr; // index of results (in MainActivity.templateDataArr)
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     //constructor
     public BlsSearch(String[] resultTitleArr, int[] resultIndexArr){
         this.resultIndexArr = resultIndexArr;
@@ -19,7 +25,11 @@ public class BlsSearch implements BlsTemplate {
 
     @Override
     public void setView(View v, int index, Context ctx, Handler handler) {
-
+        mRecyclerView = (RecyclerView) v.findViewById(ctx.getResources().getIdentifier("search_result_list","id",ctx.getPackageName()));
+        mLayoutManager = new LinearLayoutManager(ctx);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new SearchAdapter(resultTitleArr, ctx);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -35,4 +45,6 @@ public class BlsSearch implements BlsTemplate {
     private boolean checkRep(){
         return (resultIndexArr != null) && (resultTitleArr != null) && (resultIndexArr.length == resultTitleArr.length);
     }
+
+
 }

@@ -29,7 +29,9 @@ import android.widget.Toast;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
+import stethoscope.com.blsassistant.blsmodel.BlsSearch;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
+import stethoscope.com.blsassistant.blsmodel.BlsTemplateFactory;
 
 
 public class MainActivity extends ActionBarActivity
@@ -42,6 +44,7 @@ public class MainActivity extends ActionBarActivity
      */
     public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
     public static final int DETAIL_FRAGMENT_TYPE_BLSMAP = 2;
+    public static final int DETAIL_FRAGMENT_TYPE_BLSSEARCH = 3;
     //public static final String FRAGMENT_TITLE_ARRAY_FLAG = "fragment_title_array";
     public static final String CURRENT_FRAGMENT = "current_fragment";
 
@@ -163,6 +166,19 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
         //searchview expanded
+        //setup search result view
+        BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
+        BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                0,
+                DETAIL_FRAGMENT_TYPE_BLSSEARCH,
+                searchResultList);
+        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
+                .commit();
+
         return true;
     }
 
@@ -233,6 +249,8 @@ public class MainActivity extends ActionBarActivity
                     return inflater.inflate(R.layout.layout_blsguide, container, false);
                 case DETAIL_FRAGMENT_TYPE_BLSMAP:
                     return inflater.inflate(R.layout.layout_blsmap, container, false);
+                case DETAIL_FRAGMENT_TYPE_BLSSEARCH:
+                    return inflater.inflate(R.layout.layout_blssearch, container, false);
                 default:
                     return inflater.inflate(R.layout.fragment_blsdetail, container, false);
             }

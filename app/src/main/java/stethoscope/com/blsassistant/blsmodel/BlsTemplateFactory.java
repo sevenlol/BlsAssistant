@@ -12,6 +12,11 @@ public class BlsTemplateFactory {
             return new BlsGuide(title, data);
         else if (type.equalsIgnoreCase("MAP"))
             return new BlsMap();
+        else if (type.equalsIgnoreCase("SEARCH")){
+            String tmpTitleArr[] = {"CPR", "Burn Injury", "AED Map"};
+            int tmpIndexArr[] = {0,1,2};
+            return new BlsSearch(tmpTitleArr, tmpIndexArr);
+        }
         else if (type.equalsIgnoreCase("TEST_GUIDE")){
             //test object for BlsGuide
             BlsData[] testBlsData = new BlsData[1];
