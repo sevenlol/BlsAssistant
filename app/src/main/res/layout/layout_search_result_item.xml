@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/search_result_title"
-    android:layout_width="match_parent"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_result_card_item"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:gravity="center_vertical"
-    android:background="@drawable/drawer_list"
-    android:fontFamily="sans-serif"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    cardview:cardBackgroundColor="@color/bright_foreground_inverse_material_light"
+    cardview:contentPadding="5dip">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/search_result_icon"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="5dip"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:id="@+id/search_result_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/search_result_icon"
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+            android:id="@+id/search_result_short_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/search_result_icon"
+            android:layout_below="@+id/search_result_title"/>
+
+        <TextView
+            android:id="@+id/search_result_step_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+

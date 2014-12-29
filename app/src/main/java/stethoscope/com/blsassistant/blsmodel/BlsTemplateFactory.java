@@ -15,7 +15,7 @@ public class BlsTemplateFactory {
         else if (type.equalsIgnoreCase("SEARCH")){
             String tmpTitleArr[] = {"CPR", "Burn Injury", "AED Map"};
             int tmpIndexArr[] = {0,1,2};
-            return new BlsSearch(tmpTitleArr, tmpIndexArr);
+            return new BlsSearch();
         }
         else if (type.equalsIgnoreCase("TEST_GUIDE")){
             //test object for BlsGuide

@@ -10,7 +10,7 @@ import android.view.View;
  * Created by stephen on 2014/12/27.
  */
 public class BlsSearch implements BlsTemplate {
-    private String[] resultTitleArr; //title of results
+    private BlsTemplate[] searchResultTemplateArr; //title of results
     private int[] resultIndexArr; // index of results (in MainActivity.templateDataArr)
 
     private RecyclerView mRecyclerView;
@@ -18,9 +18,13 @@ public class BlsSearch implements BlsTemplate {
     private RecyclerView.LayoutManager mLayoutManager;
 
     //constructor
-    public BlsSearch(String[] resultTitleArr, int[] resultIndexArr){
+    public BlsSearch(){
+        searchResultTemplateArr = null;
+    }
+
+    public void setSearchResultArr(BlsTemplate[] templateArr, int[] resultIndexArr){
+        searchResultTemplateArr = templateArr;
         this.resultIndexArr = resultIndexArr;
-        this.resultTitleArr = resultTitleArr;
     }
 
     @Override
@@ -28,7 +32,7 @@ public class BlsSearch implements BlsTemplate {
         mRecyclerView = (RecyclerView) v.findViewById(ctx.getResources().getIdentifier("search_result_list","id",ctx.getPackageName()));
         mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SearchAdapter(resultTitleArr, ctx);
+        mAdapter = new SearchAdapter(searchResultTemplateArr, ctx);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -43,7 +47,7 @@ public class BlsSearch implements BlsTemplate {
     }
 
     private boolean checkRep(){
-        return (resultIndexArr != null) && (resultTitleArr != null) && (resultIndexArr.length == resultTitleArr.length);
+        return (resultIndexArr != null) && (searchResultTemplateArr != null) && (resultIndexArr.length == searchResultTemplateArr.length);
     }
 
 

@@ -169,6 +169,10 @@ public class MainActivity extends ActionBarActivity
         //setup search result view
         BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
         BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+        int[] templateIndexArr = new int[templateDataArr.length];
+        for (int i=0;i<templateIndexArr.length;i++)
+            templateIndexArr[i] = i;
+        searchResultList.setSearchResultArr(templateDataArr,templateIndexArr);
         FragmentManager fragmentManager = getSupportFragmentManager();
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
                 0,
