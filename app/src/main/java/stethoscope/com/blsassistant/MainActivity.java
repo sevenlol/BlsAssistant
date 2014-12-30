@@ -26,6 +26,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
@@ -159,7 +161,60 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onQueryTextChange(String newText) {
         //real-time search
-        Log.d("Search","CHANGE: " + newText);
+        if (!newText.equals("")){
+            //not empty
+            BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
+            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+
+            ArrayList<Integer> tmpIndexArr = new ArrayList<Integer>();
+            ArrayList<BlsTemplate> matchTemplateArr = new ArrayList<BlsTemplate>();
+            for (int i=0;i<templateDataArr.length;i++){
+                if (templateDataArr[i].contains(newText)){
+                    tmpIndexArr.add(i);
+                    matchTemplateArr.add(templateDataArr[i]);
+                }
+            }
+            int[] templateIndexArr = new int[tmpIndexArr.size()];
+            BlsTemplate[] templateArr = new BlsTemplate[matchTemplateArr.size()];
+            for (int i=0;i<tmpIndexArr.size();i++){
+                templateIndexArr[i] = tmpIndexArr.get(i);
+                templateArr[i] = matchTemplateArr.get(i);
+            }
+
+            if (matchTemplateArr.size() != 0){
+                //found match
+                searchResultList.setSearchResultArr(templateArr,templateIndexArr);
+            }
+            else{
+                //no match found
+                searchResultList.setSearchResultArr(null,null);
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                    0,
+                    DETAIL_FRAGMENT_TYPE_BLSSEARCH,
+                    searchResultList);
+            //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
+                    .commit();
+        }
+        else{
+            BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
+            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+            searchResultList.setSearchResultArr(null,null);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                    0,
+                    DETAIL_FRAGMENT_TYPE_BLSSEARCH,
+                    searchResultList);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
+                    .commit();
+        }
+
         return true;
     }
 
@@ -169,16 +224,13 @@ public class MainActivity extends ActionBarActivity
         //setup search result view
         BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
         BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
-        int[] templateIndexArr = new int[templateDataArr.length];
-        for (int i=0;i<templateIndexArr.length;i++)
-            templateIndexArr[i] = i;
-        searchResultList.setSearchResultArr(templateDataArr,templateIndexArr);
+        searchResultList.setSearchResultArr(null,null);
         FragmentManager fragmentManager = getSupportFragmentManager();
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
                 0,
                 DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                 searchResultList);
-        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+
         fragmentManager.beginTransaction()
                 .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
                 .commit();
@@ -190,6 +242,22 @@ public class MainActivity extends ActionBarActivity
     public boolean onMenuItemActionCollapse(MenuItem item) {
         //searchview close
         Log.d("Search","CLOSE.");
+        //set to the first BlsTemplate
+        int templateType = -1;
+        if (templateDataArr[0] instanceof BlsGuide)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
+        else if (templateDataArr[0] instanceof BlsMap)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                0 + 1,
+                templateType,
+                templateDataArr[0]);
+        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
+                .commit();
         return true;
     }
 

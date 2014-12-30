@@ -8,6 +8,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,27 +70,37 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTitleTextView.setText("Title" + String.valueOf(position));
-        holder.mShortDescriptionView.setText("Short Description" + String.valueOf(position));
-        holder.mStepNumberView.setText("Step# of " + String.valueOf(position));
-        InputStream ims = null;
-        try {
-            ims = ctx.getAssets().open("search_item_icon.png");
-            Drawable d = Drawable.createFromStream(ims, null);
-            Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-            Drawable dNew = new BitmapDrawable(ctx.getResources(), Bitmap.createScaledBitmap(bitmap, 49, 49, true));
-            holder.mIconImageView.setImageDrawable(dNew);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (mTemplate != null){
+            holder.mTitleTextView.setText(mTemplate[position].getTitle());
+            holder.mShortDescriptionView.setText("Short Description" + String.valueOf(position));
+            if (mTemplate[position] instanceof BlsGuide){
+                //set step number if this template is a guide
+                holder.mStepNumberView.setText(String.valueOf(((BlsGuide) mTemplate[position]).getDataCount()));
+            }
+            else{
+                //make the view invisible
+                holder.mStepNumberView.setVisibility(View.GONE);
+            }
+
+            InputStream ims = null;
+            try {
+                ims = ctx.getAssets().open("search_item_icon.png");
+                Drawable d = Drawable.createFromStream(ims, null);
+                Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+                Drawable dNew = new BitmapDrawable(ctx.getResources(), Bitmap.createScaledBitmap(bitmap, 49, 49, true));
+                holder.mIconImageView.setImageDrawable(dNew);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-
 
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mTemplate.length;
+        if (mTemplate != null)
+            return mTemplate.length;
+        return 0;
     }
 }

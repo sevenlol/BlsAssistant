@@ -25,4 +25,9 @@ public class BlsMap implements BlsTemplate{
     public String getTitle() {
         return "AED Map";
     }
+
+    @Override
+    public boolean contains(String searchStr) {
+        return "aed map".contains(searchStr.toLowerCase());
+    }
 }

@@ -99,6 +99,11 @@ public class BlsGuide implements BlsTemplate{
         return guideTitle;
     }
 
+    @Override
+    public boolean contains(String searchStr) {
+        return guideTitle.toLowerCase().contains(searchStr.toLowerCase());
+    }
+
     public int getDataCount(){
         if (guideData == null)
             return 0;

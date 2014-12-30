@@ -48,7 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_corner"
+            android:textColor="#ffff"/>
 
     </RelativeLayout>
 

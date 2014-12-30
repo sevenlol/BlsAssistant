@@ -8,4 +8,5 @@ public interface BlsTemplate{
     void setView(View v, int index, Context ctx, Handler handler);
     String getDataTitle(int index);
     String getTitle();
+    boolean contains(String searchStr);
 }

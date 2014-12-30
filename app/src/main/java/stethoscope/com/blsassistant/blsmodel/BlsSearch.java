@@ -46,6 +46,11 @@ public class BlsSearch implements BlsTemplate {
         return "Search Result";
     }
 
+    @Override
+    public boolean contains(String searchStr) {
+        return false;
+    }
+
     private boolean checkRep(){
         return (resultIndexArr != null) && (searchResultTemplateArr != null) && (resultIndexArr.length == searchResultTemplateArr.length);
     }
