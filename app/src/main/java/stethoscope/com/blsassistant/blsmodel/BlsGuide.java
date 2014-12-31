@@ -2,13 +2,16 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +38,7 @@ public class BlsGuide implements BlsTemplate{
 
     @Override
     public void setView(View v, int index, Context ctx, Handler handler) {
-        try{
+
 
             if (checkBlsDataRep(index)){
                 //data not corrupted
@@ -48,12 +51,22 @@ public class BlsGuide implements BlsTemplate{
                 Log.d("RepCheck", "" + guideStr);
                 mText.setText(guideStr);
 
-                //load imageview
 
-                ImageView mImage = (ImageView) v.findViewById(ctx.getResources().getIdentifier("guide_image", "id", ctx.getPackageName()));
-                InputStream ims = ctx.getAssets().open(guideData[index].getUrl()[0]);
-                Drawable d = Drawable.createFromStream(ims, null);
-                mImage.setImageDrawable(d);
+                String mediaFileStr = guideData[index].getUrl()[0];
+                if (mediaFileStr != null && mediaFileStr.contains(".")){
+                    String extensionStr = mediaFileStr.substring(mediaFileStr.lastIndexOf(".") + 1, mediaFileStr.length());
+                    if (extensionStr.equalsIgnoreCase("jpg") || extensionStr.equalsIgnoreCase("png")){
+                        //set imageview
+                        setImageView(v, ctx, index);
+                    }
+
+                    if (extensionStr.equalsIgnoreCase("mp4") || extensionStr.equalsIgnoreCase("3gp")){
+                        //set videoview
+                        setVideoView(v, ctx, index);
+                    }
+                }
+
+
 
 
                 //set next step button
@@ -80,9 +93,44 @@ public class BlsGuide implements BlsTemplate{
 
 
             }
+
+    }
+
+
+    private void setVideoView(View v, Context ctx, int index){
+        ImageView mImage = (ImageView) v.findViewById(ctx.getResources().getIdentifier("guide_image", "id", ctx.getPackageName()));
+        mImage.setVisibility(View.GONE);
+
+        VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
+        MediaController mc = new MediaController(ctx);
+        mVideo.setMediaController(mc);
+        try{
+            String fileName = guideData[index].getUrl()[0];
+            String path = "android.resource://" + ctx.getPackageName() + "/" +
+                    ctx.getResources().getIdentifier(fileName.substring(0,fileName.indexOf(".")),"raw",ctx.getPackageName());
+            mVideo.setVideoURI(Uri.parse(path));
+            mVideo.setVisibility(View.VISIBLE);
+            mVideo.start();
+        } catch (Exception e){
+
+        }
+    }
+
+    private void setImageView(View v, Context ctx, int index){
+        //load imageview and set videoview to invisible mode
+        try{
+            ImageView mImage = (ImageView) v.findViewById(ctx.getResources().getIdentifier("guide_image", "id", ctx.getPackageName()));
+            InputStream ims = ctx.getAssets().open(guideData[index].getUrl()[0]);
+            Drawable d = Drawable.createFromStream(ims, null);
+            mImage.setImageDrawable(d);
+            mImage.setVisibility(View.VISIBLE);
+
+            VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
+            mVideo.setVisibility(View.GONE);
         } catch (IOException e){
 
         }
+
     }
 
 

@@ -1,6 +1,12 @@
 {
 	"data" :
 	[
+	    {
+    		"title" : "Video",
+    		"url" : ["cpr.3gp"],
+    		"description" : ["CPR Video"],
+    		"order" : ["url", "description"]
+    	},
 		{
 			"title" : "Check",
 			"url" : ["cpr/step1.jpg"],

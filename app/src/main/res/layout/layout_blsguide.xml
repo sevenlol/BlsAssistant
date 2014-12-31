@@ -69,6 +69,13 @@
             android:layout_height="wrap_content"
             >
 
+            <VideoView
+                android:id="@+id/guide_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"/>
+
             <ImageView
                 android:id="@+id/guide_image"
                 android:layout_width="180dp"
@@ -76,7 +83,8 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_below="@id/guide_video"
+                />
 
             <TextView
                 android:id="@+id/guide_text"
