@@ -4,7 +4,7 @@
 		{
 			"title" : "Check",
 			"url" : ["cpr/step1.jpg"],
-			"description" : ["Check if the victim is concious."],
+			"description" : ["CPR description 1."],
 			"order" : ["url", "description"]
 		},
 		{

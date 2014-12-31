@@ -249,6 +249,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
         //searchview expanded
+        if (item.getActionView() instanceof SearchView){
+            //reset the query string and focus the searchview
+            SearchView mSearchView = (SearchView) item.getActionView();
+            mSearchView.setQuery("",false);
+            mSearchView.requestFocus();
+        }
+
         //setup search result view
         BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
         BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
