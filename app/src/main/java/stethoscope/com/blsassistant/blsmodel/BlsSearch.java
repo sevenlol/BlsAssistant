@@ -32,7 +32,7 @@ public class BlsSearch implements BlsTemplate {
         mRecyclerView = (RecyclerView) v.findViewById(ctx.getResources().getIdentifier("search_result_list","id",ctx.getPackageName()));
         mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SearchAdapter(searchResultTemplateArr, ctx);
+        mAdapter = new SearchAdapter(searchResultTemplateArr, resultIndexArr, ctx);
         mRecyclerView.setAdapter(mAdapter);
     }
 

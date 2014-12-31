@@ -18,23 +18,33 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 
+import stethoscope.com.blsassistant.MainActivity;
+
 /**
  * Created by stephen on 2014/12/29.
  */
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     private BlsTemplate[] mTemplate;
+    private int[] mIndexArr;
     private static Context ctx;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         public TextView mTitleTextView;
         public ImageView mIconImageView;
         public TextView mShortDescriptionView;
         public TextView mStepNumberView;
-        public ViewHolder(CardView v) {
+        public CardView mSearchResultItem;
+        public IMyViewHolderClick mListener;
+        public int templateIndex = -1;
+        private Context ctx;
+
+        public ViewHolder(CardView v, Context ctx, IMyViewHolderClick listener) {
             super(v);
+            this.ctx = ctx;
+            this.mListener = listener;
             mTitleTextView = (TextView) v.findViewById(ctx.getResources().getIdentifier(
                     "search_result_title","id",ctx.getPackageName()));
             mShortDescriptionView = (TextView) v.findViewById(ctx.getResources().getIdentifier(
@@ -43,11 +53,26 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     "search_result_step_number","id",ctx.getPackageName()));
             mIconImageView = (ImageView) v.findViewById(ctx.getResources().getIdentifier(
                     "search_result_icon","id",ctx.getPackageName()));
+
+            //set onclick listener
+            mSearchResultItem = v;
+            mSearchResultItem.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v instanceof CardView && templateIndex != -1)
+                mListener.onResultItemClick((CardView) v, templateIndex, ctx);
+        }
+
+        public static interface IMyViewHolderClick{
+            public void onResultItemClick(CardView v, int id, Context ctx);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SearchAdapter(BlsTemplate[] myTemplate, Context ctx) {
+    public SearchAdapter(BlsTemplate[] myTemplate, int[] indexArr, Context ctx) {
+        this.mIndexArr = indexArr;
         this.mTemplate = myTemplate;
         this.ctx = ctx;
     }
@@ -61,7 +86,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 .inflate(ctx.getResources().getIdentifier("layout_search_result_item","layout",ctx.getPackageName()), parent, false);
         // set the view's size, margins, paddings and layout parameters
 
-        ViewHolder vh = new ViewHolder((CardView) v);
+        ViewHolder vh = new ViewHolder((CardView) v, ctx, new ViewHolder.IMyViewHolderClick() {
+            @Override
+            public void onResultItemClick(CardView v, int index, Context ctx) {
+                //goes to each item's content page
+                ((MainActivity) ctx).displayTemplate(index);
+            }
+        });
         return vh;
     }
 
@@ -92,6 +123,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            // set template index
+            holder.templateIndex = mIndexArr[position];
         }
 
     }

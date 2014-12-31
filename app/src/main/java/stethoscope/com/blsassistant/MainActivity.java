@@ -55,6 +55,8 @@ public class MainActivity extends ActionBarActivity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private Menu menu;
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -123,6 +125,31 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
+    public void displayTemplate(int position) {
+        MenuItem menuSearch = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) menuSearch.getActionView();
+        menuSearch.collapseActionView();
+
+
+        int templateType = -1;
+        if (templateDataArr[position] instanceof BlsGuide)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
+        else if (templateDataArr[position] instanceof BlsMap)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
+        // update the main content by replacing fragments
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+                position + 1,
+                templateType,
+                templateDataArr[position]);
+        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
+                .commit();
+
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,6 +158,7 @@ public class MainActivity extends ActionBarActivity
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
+            this.menu = menu;
             restoreActionBar();
             return true;
         }
