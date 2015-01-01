@@ -9,11 +9,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,13 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
@@ -70,7 +63,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d("test", "onCreate()");
         //read json files
         loadData();
 
@@ -78,6 +71,7 @@ public class MainActivity extends ActionBarActivity
         //setup nav drawer
         setUpDrawer();
         //update nav drawer titles
+
         updateDrawer();
 
 
@@ -109,9 +103,19 @@ public class MainActivity extends ActionBarActivity
 
     private void updateDrawer(){
         String[] titleList = new String[templateDataArr.length];
-        for (int i=0;i<templateDataArr.length;i++)
+        int[] indexList = new int[templateDataArr.length];
+        int[] stepCountList = new int[templateDataArr.length];
+        for (int i=0;i<templateDataArr.length;i++){
             titleList[i] = templateDataArr[i].getTitle();
-        mNavigationDrawerFragment.updateTitleList(titleList);
+            indexList[i] = i;
+            if (templateDataArr[i] instanceof BlsGuide){
+                stepCountList[i] = ((BlsGuide) templateDataArr[i]).getDataCount();
+            }
+            else{
+                stepCountList[i] = 0;
+            }
+        }
+        mNavigationDrawerFragment.updateTitleList(templateDataArr, this);
     }
 
     public void onSectionAttached(String title) {
@@ -335,8 +339,7 @@ public class MainActivity extends ActionBarActivity
             fragmentType = type;
             fragTemplate = template;
             currentIndex = 0;
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            return fragment;
+            return new PlaceholderFragment();
         }
 
 

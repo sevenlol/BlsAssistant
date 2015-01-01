@@ -30,6 +30,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import stethoscope.com.blsassistant.blsmodel.BlsGuide;
+import stethoscope.com.blsassistant.blsmodel.BlsMap;
+import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
+import stethoscope.com.blsassistant.blsmodel.DrawerListAdapter;
+
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -66,12 +73,12 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
     private MenuItem mItem;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 1;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private String[] titleArr;
-    private String[] indexArr;
+    private BlsTemplate[] templateArr;
+    private int[] indexArr;
 
     public NavigationDrawerFragment() {
     }
@@ -110,6 +117,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Drawer","onItemClick");
                 selectItem(position);
             }
         });
@@ -123,7 +131,6 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section3),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-
         return mDrawerListView;
     }
 
@@ -207,25 +214,74 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
+        Log.d("Drawer","Click: " + position);
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+        if (mCallbacks != null && indexArr != null && indexArr[position] != -1) {
+            //check the corresponding index and call onNavigationDrawerItemSelected
+            //-1 means separator
+            mCallbacks.onNavigationDrawerItemSelected(indexArr[position]);
         }
     }
 
-    public void updateTitleList(String[] titleList){
+    public void updateTitleList(BlsTemplate[] templateArr, Context ctx){
 
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
+        this.templateArr = templateArr;
+
+        //set the object array for drawer
+        //and index array for onclick event
+        int sectionCount = DrawerListAdapter.sectionTitleArr.length;
+        ArrayList<Object> objList = new ArrayList<Object>();
+        ArrayList<Integer> indexList = new ArrayList<Integer>();
+
+
+        for (int i=0;i<sectionCount;i++){
+            objList.add( new String(DrawerListAdapter.sectionTitleArr[i]) );
+            indexList.add(-1);
+            for (int j=0;j<templateArr.length;j++){
+                if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE &&
+                        templateArr[j] instanceof BlsGuide){
+                    objList.add( new DrawerListAdapter.Template(
+                            templateArr[j].getTitle(),
+                            DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE,
+                            ((BlsGuide) templateArr[j]).getDataCount()) );
+                    indexList.add(j);
+                }
+                else if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP &&
+                        templateArr[j] instanceof BlsMap){
+                    objList.add( new DrawerListAdapter.Template(
+                            templateArr[j].getTitle(),
+                            DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP,
+                            0 ) );
+                    indexList.add(j);
+                }
+            }
+        }
+
+        Object[] objArr = new Object[objList.size()];
+        this.indexArr = new int[objList.size()];
+
+        for (int i=0;i<objList.size();i++){
+            objArr[i] = objList.get(i);
+            indexArr[i] = indexList.get(i);
+        }
+
+        mDrawerListView.setAdapter(new DrawerListAdapter(
+                objArr,
+                ctx,
                 R.layout.layout_list_item,
-                R.id.text1,
-                titleList
+                R.layout.layout_list_separator,
+                R.id.drawer_list_item_template_title,
+                R.id.drawer_list_item_template_step_number,
+                R.id.drawer_list_separator_title
         ));
+        Log.d("Drawer", "Set item: " + mCurrentSelectedPosition);
+        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        selectItem(mCurrentSelectedPosition);
     }
 
     @Override
