@@ -79,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     // Create new views (invoked by the layout manager)
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public SearchAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent,
                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
@@ -90,6 +90,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             @Override
             public void onResultItemClick(CardView v, int index, Context ctx) {
                 //goes to each item's content page
+                ((MainActivity) ctx).collapseSearchView();
+                ((MainActivity) ctx).hideKeyBoard(parent);
                 ((MainActivity) ctx).displayTemplate(index);
             }
         });

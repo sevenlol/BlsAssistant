@@ -273,6 +273,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         }
         else{
+            //set searchview
             SearchManager manager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
             mItem = menu.findItem(R.id.search);
             SearchView search = (SearchView) mItem.getActionView();

@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class MainActivity extends ActionBarActivity
     /*
      *  Constants
      */
+    //DETAIL_* constants are used to specify the current template type in placeholder fragment
     public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
     public static final int DETAIL_FRAGMENT_TYPE_BLSMAP = 2;
     public static final int DETAIL_FRAGMENT_TYPE_BLSSEARCH = 3;
@@ -54,7 +56,7 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
+    //menu instance for collapsing searchview
     private Menu menu;
 
     /**
@@ -62,7 +64,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    //BlsTemplate data array
+    //BlsTemplate data array, storing the data load from the json files
     private BlsTemplate[] templateDataArr;
 
     @Override
@@ -70,50 +72,50 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         //read json files
-        BlsDataReader tmpReader = new BlsDataReader(this);
-        templateDataArr = tmpReader.getTemplates();
+        loadData();
 
         setContentView(R.layout.activity_main);
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-
+        //setup nav drawer
+        setUpDrawer();
         //update nav drawer titles
-        String[] titleList = new String[templateDataArr.length];
-        for (int i=0;i<templateDataArr.length;i++)
-            titleList[i] = templateDataArr[i].getTitle();
-        mNavigationDrawerFragment.updateTitleList(titleList);
+        updateDrawer();
 
 
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        int templateType = -1;
-        if (templateDataArr[position] instanceof BlsGuide)
-            templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
-        else if (templateDataArr[position] instanceof BlsMap)
-            templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                position + 1,
-                templateType,
-                templateDataArr[position]);
-        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
-                .commit();
+        /*  When an drawer item is selected,
+         *  display the corresponding BlsTemplate at PlaceHolderFragment
+         */
+        collapseSearchView();
+        displayTemplate(position);
+    }
+
+    private void loadData(){
+        BlsDataReader tmpReader = new BlsDataReader(this);
+        templateDataArr = tmpReader.getTemplates();
+    }
+
+    private void setUpDrawer(){
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    private void updateDrawer(){
+        String[] titleList = new String[templateDataArr.length];
+        for (int i=0;i<templateDataArr.length;i++)
+            titleList[i] = templateDataArr[i].getTitle();
+        mNavigationDrawerFragment.updateTitleList(titleList);
     }
 
     public void onSectionAttached(String title) {
-        //set detail fragment title
+        //set PlaceholderFragment title
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
     }
@@ -125,12 +127,16 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
+    public void collapseSearchView(){
+        //collapse the searchview
+        if (menu != null){
+            MenuItem menuSearch = menu.findItem(R.id.search);
+            if (menuSearch != null)
+                menuSearch.collapseActionView();
+        }
+    }
+
     public void displayTemplate(int position) {
-        MenuItem menuSearch = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) menuSearch.getActionView();
-        menuSearch.collapseActionView();
-
-
         int templateType = -1;
         if (templateDataArr[position] instanceof BlsGuide)
             templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
@@ -138,16 +144,20 @@ public class MainActivity extends ActionBarActivity
             templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
+        //create PlaceholderFragment instance
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                position + 1,
                 templateType,
                 templateDataArr[position]);
-        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
+        //display the template
         fragmentManager.beginTransaction()
                 .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
                 .commit();
+    }
 
-
+    public void hideKeyBoard(View v){
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 
@@ -218,12 +228,11 @@ public class MainActivity extends ActionBarActivity
                 searchResultList.setSearchResultArr(null,null);
             }
 
+            //display search result
             FragmentManager fragmentManager = getSupportFragmentManager();
             PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                    0,
                     DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                     searchResultList);
-            //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
             fragmentManager.beginTransaction()
                     .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
                     .commit();
@@ -234,7 +243,6 @@ public class MainActivity extends ActionBarActivity
             searchResultList.setSearchResultArr(null,null);
             FragmentManager fragmentManager = getSupportFragmentManager();
             PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                    0,
                     DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                     searchResultList);
 
@@ -248,12 +256,16 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
-        //searchview expanded
+        //searchview expanded (someone clicked on the search icon)
         if (item.getActionView() instanceof SearchView){
             //reset the query string and focus the searchview
             SearchView mSearchView = (SearchView) item.getActionView();
             mSearchView.setQuery("",false);
             mSearchView.requestFocus();
+            //show keyboard
+            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).
+                    toggleSoftInput(InputMethodManager.SHOW_FORCED,
+                            InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
 
         //setup search result view
@@ -262,7 +274,6 @@ public class MainActivity extends ActionBarActivity
         searchResultList.setSearchResultArr(null,null);
         FragmentManager fragmentManager = getSupportFragmentManager();
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                0,
                 DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                 searchResultList);
 
@@ -277,22 +288,12 @@ public class MainActivity extends ActionBarActivity
     public boolean onMenuItemActionCollapse(MenuItem item) {
         //searchview close
         Log.d("Search","CLOSE.");
+        //hide keyboard
+        if (item.getActionView() instanceof SearchView){
+            hideKeyBoard(item.getActionView());
+        }
         //set to the first BlsTemplate
-        int templateType = -1;
-        if (templateDataArr[0] instanceof BlsGuide)
-            templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
-        else if (templateDataArr[0] instanceof BlsMap)
-            templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
-                0 + 1,
-                templateType,
-                templateDataArr[0]);
-        //new BlsTemplateFactory().getTemplate("TEST_GUIDE", null, null)
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
-                .commit();
+        displayTemplate(0);
         return true;
     }
 
@@ -304,8 +305,6 @@ public class MainActivity extends ActionBarActivity
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private static final String ARG_FRAGMENT_TYPE = "fragment_type";
 
 
         //constants for swipe event
@@ -313,33 +312,30 @@ public class MainActivity extends ActionBarActivity
         private static final int SWIPE_MAX_OFF_PATH = 250;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
-        //message constants
+        //message constants for fragHandler
         public static final int MESSAGE_NEXT_STEP = 1;
         public static final int MESSAGE_LAST_STEP = 2;
 
+        //current type of the template displayed, see DETAIL_* constants
         private static int fragmentType;
+        //displayed template
         private static BlsTemplate fragTemplate;
+        //current step in the displayed template (only for blsguide atm)
         private static int currentIndex;
-
+        //handler instant for events (onclick) in the displayed template
         private Handler fragHandler;
-
+        //to detect swipe event (only for blsguide atm)
         private GestureDetector gestureDetector;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber, int type, BlsTemplate template) {
+        public static PlaceholderFragment newInstance(int type, BlsTemplate template) {
             fragmentType = type;
             fragTemplate = template;
             currentIndex = 0;
-
-
             PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            args.putInt(ARG_FRAGMENT_TYPE, type);
-            fragment.setArguments(args);
             return fragment;
         }
 
@@ -366,37 +362,28 @@ public class MainActivity extends ActionBarActivity
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
-            //((MainActivity) activity).onSectionAttached(
-            //        getArguments().getInt(ARG_SECTION_NUMBER),getArguments().getInt(ARG_FRAGMENT_TYPE));
         }
 
         @Override
         public void onActivityCreated (Bundle savedInstanceState){
             super.onActivityCreated(savedInstanceState);
-
-
+            //create the handler
             fragHandler = new fragMessageHandler();
             //set starting view
             fragTemplate.setView(getView(), 0, getActivity(), fragHandler);
+            //set the template title
             String fragTitle = fragTemplate.getDataTitle(0);
             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
-
+            //create the gesture detector instance
             gestureDetector = new GestureDetector(getActivity(),new MyGestureDetector());
-
             getView().setOnTouchListener(new fragOnTouchListener());
         }
 
         private class fragOnTouchListener implements View.OnTouchListener{
-
-
-
-
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
             }
-
-
         }
 
         private class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
@@ -417,8 +404,6 @@ public class MainActivity extends ActionBarActivity
                                 ((MainActivity) getActivity()).onSectionAttached(fragTitle);
                             }
                         }
-
-
                     }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                         // Right swipe in blsguide == last step
                         if (fragTemplate instanceof BlsGuide){
@@ -451,27 +436,28 @@ public class MainActivity extends ActionBarActivity
                         maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
 
                         if (currentIndex < maxStepCount - 1 && getView() != null && getActivity() != null && currentIndex >= 0){
+                            //call the setView() method on BlsTemplate to display the next stpe
                             fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
-
+                            //set step title
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
                         }
-
-
                         break;
                     case MESSAGE_LAST_STEP: //last step click event for BlsGuide
                         maxStepCount = ((BlsGuide) fragTemplate).getDataCount();
                         if (currentIndex > 0 && currentIndex < maxStepCount && getView() != null && getActivity() != null){
+                            //call the setView() method on BlsTemplate to display the last stpe
                             fragTemplate.setView(getView(), --currentIndex, getActivity(), fragHandler);
+                            //set step title
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
                         }
-
                         break;
                     default:
                 }
             }
         }
+
     }
 
 }
