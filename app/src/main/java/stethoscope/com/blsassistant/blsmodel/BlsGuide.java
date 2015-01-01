@@ -110,6 +110,7 @@ public class BlsGuide implements BlsTemplate{
                     ctx.getResources().getIdentifier(fileName.substring(0,fileName.indexOf(".")),"raw",ctx.getPackageName());
             mVideo.setVideoURI(Uri.parse(path));
             mVideo.setVisibility(View.VISIBLE);
+            mVideo.seekTo(100);
             //mVideo.start();
         } catch (Exception e){
 

@@ -214,17 +214,30 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        Log.d("Drawer","Click: " + position);
-        if (mDrawerListView != null) {
+
+        if (mDrawerListView != null && indexArr != null && indexArr[position] != -1) {
+            Log.d("Drawer","Set Checked: " + position);
             mDrawerListView.setItemChecked(position, true);
         }
-        if (mDrawerLayout != null) {
+        if (mDrawerLayout != null && indexArr != null && indexArr[position] != -1) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null && indexArr != null && indexArr[position] != -1) {
             //check the corresponding index and call onNavigationDrawerItemSelected
             //-1 means separator
             mCallbacks.onNavigationDrawerItemSelected(indexArr[position]);
+        }
+    }
+
+    public void setSelectedItem(int index){
+        if (mDrawerListView != null) {
+            for (int i=0;i<indexArr.length;i++){
+                if (indexArr[i] == index){
+                    mCurrentSelectedPosition = i;
+                    mDrawerListView.setItemChecked(i, true);
+                }
+            }
+
         }
     }
 

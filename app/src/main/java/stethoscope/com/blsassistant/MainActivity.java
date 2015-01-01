@@ -140,22 +140,29 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    public void displayTemplate(int position) {
+    public void setSelectedItem(int index){
+        mNavigationDrawerFragment.setSelectedItem(index);
+    }
+
+    public void displayTemplate(int index) {
+        //index: the displayed item's index in templateDataArr
         int templateType = -1;
-        if (templateDataArr[position] instanceof BlsGuide)
+        if (templateDataArr[index] instanceof BlsGuide)
             templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
-        else if (templateDataArr[position] instanceof BlsMap)
+        else if (templateDataArr[index] instanceof BlsMap)
             templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         //create PlaceholderFragment instance
         PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
                 templateType,
-                templateDataArr[position]);
+                templateDataArr[index]);
         //display the template
         fragmentManager.beginTransaction()
                 .replace(R.id.container, currentFragment, CURRENT_FRAGMENT)
                 .commit();
+        setSelectedItem(index);
+
     }
 
     public void hideKeyBoard(View v){
