@@ -9,7 +9,7 @@
     	},
 		{
 			"title" : "Check",
-			"url" : ["cpr/step1.jpg"],
+			"url" : ["cpr.3gp"],
 			"description" : ["CPR description 1."],
 			"order" : ["url", "description"]
 		},

@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
@@ -63,9 +64,10 @@ public class MainActivity extends ActionBarActivity
     //menu instance for collapsing searchview
     private Menu menu;
 
-    private MediaPlayer mPlayer;
-    private VideoControllerView mController;
-    private String mVideoName;
+    private MediaPlayer mPlayer = null;
+    private VideoControllerView mController = null;
+    private String mVideoName = null;
+    private SurfaceView mSView;
 
     public static PlaceholderFragment currentFragment = null;
 
@@ -326,17 +328,49 @@ public class MainActivity extends ActionBarActivity
     }
 
     //video functions starts
-    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, String name){
-        mPlayer = player;
-        mController = controller;
+    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, SurfaceView sView, String name){
+        if (mPlayer == null)
+            mPlayer = player;
+        else{
+            AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
+            Log.d("MEDIA","SURFACE_CREATED");
+            try
+            {
+                mPlayer.reset();
+                //player.setDisplay(videoHolder);
+                mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+                mPlayer.prepare();
+                mController.setMediaPlayer(this);
+                mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
+                mController.show(2000);
+                mPlayer.seekTo(1);
+                //mPlayer.start();
+                afd.close();
+            }
+            catch (IllegalArgumentException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
+            catch (IllegalStateException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
+            catch (IOException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
+        }
+        if (mController == null)
+            mController = controller;
         mVideoName = name;
+        mSView = sView;
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mPlayer.setDisplay(holder);
         AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
-
+        Log.d("MEDIA","SURFACE_CREATED");
         try
         {
             mPlayer.reset();
@@ -371,7 +405,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        Log.d("Surface","destroyed");
     }
 
     @Override
