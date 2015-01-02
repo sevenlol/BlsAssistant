@@ -18,4 +18,6 @@
     <string name="search_title">Search</string>
     <string name="search_hint">Hint</string>
 
+    <string name="description">Media Controls</string>
+
 </resources>

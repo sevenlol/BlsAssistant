@@ -70,12 +70,17 @@
             android:layout_height="wrap_content"
             >
 
-            <VideoView
+            <FrameLayout
                 android:id="@+id/guide_video"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"/>
+                android:layout_height="300dp"
+                >
+
+                <SurfaceView
+                    android:id="@+id/guide_video_surface"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/guide_image"

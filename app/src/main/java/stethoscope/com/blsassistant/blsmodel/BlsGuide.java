@@ -2,12 +2,17 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -15,6 +20,9 @@ import android.widget.VideoView;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import stethoscope.com.blsassistant.MainActivity;
+import stethoscope.com.blsassistant.VideoControllerView;
 
 
 public class BlsGuide implements BlsTemplate{
@@ -107,7 +115,17 @@ public class BlsGuide implements BlsTemplate{
         ImageView mImage = (ImageView) v.findViewById(ctx.getResources().getIdentifier("guide_image", "id", ctx.getPackageName()));
         mImage.setVisibility(View.GONE);
 
-        VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
+        SurfaceView videoSurface = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
+        SurfaceHolder videoHolder = videoSurface.getHolder();
+        videoHolder.addCallback((MainActivity) ctx);
+
+        MediaPlayer player = new MediaPlayer();
+        VideoControllerView controller = new VideoControllerView(ctx);
+        videoSurface.setOnTouchListener(new VideoOnTouchListener(controller));
+        String fileName = guideData[index].getUrl()[0];
+        ((MainActivity) ctx).setVideoPlayer(player,controller,fileName.substring(0,fileName.indexOf(".")));
+        /*
+        SurfaceView mVideo = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
         MediaController mc = new MediaController(ctx);
         mVideo.setMediaController(mc);
         mController = mc;
@@ -121,7 +139,7 @@ public class BlsGuide implements BlsTemplate{
             //mVideo.start();
         } catch (Exception e){
 
-        }
+        }*/
     }
 
     private void setImageView(View v, Context ctx, int index){
@@ -133,7 +151,7 @@ public class BlsGuide implements BlsTemplate{
             mImage.setImageDrawable(d);
             mImage.setVisibility(View.VISIBLE);
 
-            VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
+            FrameLayout mVideo = (FrameLayout) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
             mVideo.setVisibility(View.GONE);
             mController = null;
         } catch (IOException e){
@@ -190,6 +208,20 @@ public class BlsGuide implements BlsTemplate{
         }
 
         return true;
+    }
+
+    private class VideoOnTouchListener implements View.OnTouchListener{
+        VideoControllerView controller;
+
+        public VideoOnTouchListener(VideoControllerView controller){
+            this.controller = controller;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            controller.show();
+            return false;
+        }
     }
 
     private class NextStepButtonListener implements View.OnClickListener{

@@ -1,7 +1,10 @@
 package stethoscope.com.blsassistant;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
@@ -18,12 +21,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
@@ -35,7 +42,8 @@ import stethoscope.com.blsassistant.blsmodel.BlsTemplateFactory;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-                    SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{
+                    SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener,
+                    SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, VideoControllerView.MediaPlayerControl{
 
 
     /*
@@ -54,6 +62,10 @@ public class MainActivity extends ActionBarActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     //menu instance for collapsing searchview
     private Menu menu;
+
+    private MediaPlayer mPlayer;
+    private VideoControllerView mController;
+    private String mVideoName;
 
     public static PlaceholderFragment currentFragment = null;
 
@@ -313,6 +325,130 @@ public class MainActivity extends ActionBarActivity
         return true;
     }
 
+    //video functions starts
+    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, String name){
+        mPlayer = player;
+        mController = controller;
+        mVideoName = name;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        mPlayer.setDisplay(holder);
+        AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
+
+        try
+        {
+            mPlayer.reset();
+            //player.setDisplay(videoHolder);
+            mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+            mPlayer.prepare();
+            mController.setMediaPlayer(this);
+            mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
+            mPlayer.start();
+            afd.close();
+        }
+        catch (IllegalArgumentException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+        catch (IllegalStateException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+        catch (IOException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+    @Override
+    public void start() {
+        mPlayer.start();
+    }
+
+    @Override
+    public void pause() {
+        mPlayer.pause();
+    }
+
+    @Override
+    public int getDuration() {
+        if (mPlayer != null)
+            return mPlayer.getDuration();
+        else
+            return 0;
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        if (mPlayer != null)
+            return mPlayer.getCurrentPosition();
+        else
+            return 0;
+    }
+
+    @Override
+    public void seekTo(int pos) {
+        mPlayer.seekTo(pos);
+    }
+
+    @Override
+    public boolean isPlaying() {
+        if (mPlayer != null)
+            return mPlayer.isPlaying();
+
+        return false;
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return 0;
+    }
+
+    @Override
+    public boolean canPause() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return true;
+    }
+
+    @Override
+    public boolean isFullScreen() {
+        return false;
+    }
+
+    @Override
+    public void toggleFullScreen() {
+        //start videoactivity here
+        Intent videoIntent = new Intent(this, VideoPlayerActivity.class);
+        videoIntent.putExtra("VIDEO_RESOURCE_ID",getResources().getIdentifier(mVideoName, "raw", getPackageName()));
+        startActivity(videoIntent);
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+
+    }
+    //video functions ends
     /**
      * A placeholder fragment containing a simple view.
      */
