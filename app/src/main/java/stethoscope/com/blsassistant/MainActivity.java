@@ -67,7 +67,6 @@ public class MainActivity extends ActionBarActivity
     private MediaPlayer mPlayer = null;
     private VideoControllerView mController = null;
     private String mVideoName = null;
-    private SurfaceView mSView;
 
     public static PlaceholderFragment currentFragment = null;
 
@@ -328,12 +327,13 @@ public class MainActivity extends ActionBarActivity
     }
 
     //video functions starts
-    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, SurfaceView sView, String name){
+    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, String name){
+        mVideoName = name;
         if (mPlayer == null)
             mPlayer = player;
         else{
             AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
-            Log.d("MEDIA","SURFACE_CREATED");
+            Log.d("MEDIA","set video player");
             try
             {
                 mPlayer.reset();
@@ -362,12 +362,38 @@ public class MainActivity extends ActionBarActivity
         }
         if (mController == null)
             mController = controller;
-        mVideoName = name;
-        mSView = sView;
+
+    }
+
+    public MediaPlayer getMPlayer(){
+        return mPlayer;
+    }
+
+    private class VideoOnTouchListener implements View.OnTouchListener{
+        VideoControllerView controller;
+
+        public VideoOnTouchListener(VideoControllerView controller){
+            this.controller = controller;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            controller.show();
+            return false;
+        }
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        if (mPlayer == null){
+            SurfaceView videoSurface = (SurfaceView) findViewById(getResources().getIdentifier("guide_video_surface", "id", getPackageName()));
+            SurfaceHolder videoHolder = videoSurface.getHolder();
+            videoHolder.addCallback(this);
+
+            mPlayer = new MediaPlayer();
+            mController = new VideoControllerView(this);
+            videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
+        }
         mPlayer.setDisplay(holder);
         AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
         Log.d("MEDIA","SURFACE_CREATED");
@@ -406,6 +432,8 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d("Surface","destroyed");
+        mPlayer = null;
+        mController = null;
     }
 
     @Override

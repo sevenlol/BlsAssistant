@@ -118,15 +118,23 @@ public class BlsGuide implements BlsTemplate{
         FrameLayout mVideo = (FrameLayout) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
         mVideo.setVisibility(View.VISIBLE);
 
-        SurfaceView videoSurface = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
-        SurfaceHolder videoHolder = videoSurface.getHolder();
-        videoHolder.addCallback((MainActivity) ctx);
+        if (((MainActivity) ctx).getMPlayer() == null){
+            SurfaceView videoSurface = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
+            SurfaceHolder videoHolder = videoSurface.getHolder();
+            videoHolder.addCallback((MainActivity) ctx);
 
-        MediaPlayer player = new MediaPlayer();
-        VideoControllerView controller = new VideoControllerView(ctx);
-        videoSurface.setOnTouchListener(new VideoOnTouchListener(controller));
-        String fileName = guideData[index].getUrl()[0];
-        ((MainActivity) ctx).setVideoPlayer(player,controller,videoSurface,fileName.substring(0,fileName.indexOf(".")));
+            MediaPlayer player = new MediaPlayer();
+            VideoControllerView controller = new VideoControllerView(ctx);
+            videoSurface.setOnTouchListener(new VideoOnTouchListener(controller));
+            String fileName = guideData[index].getUrl()[0];
+            ((MainActivity) ctx).setVideoPlayer(player,controller,fileName.substring(0,fileName.indexOf(".")));
+        }
+        else{
+            String fileName = guideData[index].getUrl()[0];
+            ((MainActivity) ctx).setVideoPlayer(null,null,fileName.substring(0,fileName.indexOf(".")));
+        }
+
+
         /*
         SurfaceView mVideo = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
         MediaController mc = new MediaController(ctx);
