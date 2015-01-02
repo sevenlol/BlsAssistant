@@ -1,6 +1,7 @@
 package stethoscope.com.blsassistant;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import java.util.ArrayList;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
@@ -328,6 +331,7 @@ public class MainActivity extends ActionBarActivity
         //message constants for fragHandler
         public static final int MESSAGE_NEXT_STEP = 1;
         public static final int MESSAGE_LAST_STEP = 2;
+        public static final int MESSAGE_VIDEO_FULLSCREEN = 3;
 
         //current type of the template displayed, see DETAIL_* constants
         private static int fragmentType;
@@ -468,6 +472,18 @@ public class MainActivity extends ActionBarActivity
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
                         }
+                        break;
+                    case MESSAGE_VIDEO_FULLSCREEN:
+                        /*
+                        DisplayMetrics metrics = new DisplayMetrics();
+                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                        RelativeLayout.LayoutParams params =
+                                (RelativeLayout.LayoutParams) getActivity().findViewById(R.id.guide_video).getLayoutParams();
+                        params.width =  metrics.widthPixels;
+                        params.height = metrics.heightPixels;
+                        Log.d("Params","Width: " + metrics.widthPixels + ", Height: " + metrics.heightPixels);
+                        params.setMargins(0, 0, 0, 0);
+                        getActivity().findViewById(R.id.guide_video).setLayoutParams(params);*/
                         break;
                     default:
                 }

@@ -64,6 +64,11 @@ public class BlsGuide implements BlsTemplate{
                     if (extensionStr.equalsIgnoreCase("mp4") || extensionStr.equalsIgnoreCase("3gp")){
                         //set videoview
                         setVideoView(v, ctx, index);
+                        //test message for fullscreen video
+                        /*
+                        Message msg = new Message();
+                        msg.what = 3;
+                        handler.sendMessage(msg);*/
                     }
                 }
 
