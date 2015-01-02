@@ -90,7 +90,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             @Override
             public void onResultItemClick(CardView v, int index, Context ctx) {
                 //goes to each item's content page
-                ((MainActivity) ctx).collapseSearchView();
+                ((MainActivity) ctx).onlyCollapse();
                 ((MainActivity) ctx).hideKeyBoard(parent);
                 ((MainActivity) ctx).displayTemplate(index);
             }

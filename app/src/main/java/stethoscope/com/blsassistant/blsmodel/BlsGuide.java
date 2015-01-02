@@ -119,6 +119,7 @@ public class BlsGuide implements BlsTemplate{
         mVideo.setVisibility(View.VISIBLE);
 
         if (((MainActivity) ctx).getMPlayer() == null){
+            Log.d("Guide","Surface mPlayer null");
             SurfaceView videoSurface = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
             SurfaceHolder videoHolder = videoSurface.getHolder();
             videoHolder.addCallback((MainActivity) ctx);
@@ -130,6 +131,7 @@ public class BlsGuide implements BlsTemplate{
             ((MainActivity) ctx).setVideoPlayer(player,controller,fileName.substring(0,fileName.indexOf(".")));
         }
         else{
+            Log.d("Guide","Surface mPlayer not null");
             String fileName = guideData[index].getUrl()[0];
             ((MainActivity) ctx).setVideoPlayer(null,null,fileName.substring(0,fileName.indexOf(".")));
         }

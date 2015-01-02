@@ -68,6 +68,8 @@ public class MainActivity extends ActionBarActivity
     private VideoControllerView mController = null;
     private String mVideoName = null;
 
+    private boolean onSearchMode = false;
+
     public static PlaceholderFragment currentFragment = null;
 
     /**
@@ -288,6 +290,7 @@ public class MainActivity extends ActionBarActivity
         //searchview expanded (someone clicked on the search icon)
         if (item.getActionView() instanceof SearchView){
             //reset the query string and focus the searchview
+            onSearchMode = true;
             SearchView mSearchView = (SearchView) item.getActionView();
             mSearchView.setQuery("",false);
             mSearchView.requestFocus();
@@ -322,15 +325,26 @@ public class MainActivity extends ActionBarActivity
             hideKeyBoard(item.getActionView());
         }
         //set to the first BlsTemplate
-        displayTemplate(0);
+        if (onSearchMode)
+            displayTemplate(0);
         return true;
+    }
+
+    public void onlyCollapse(){
+        onSearchMode = false;
+        collapseSearchView();
     }
 
     //video functions starts
     public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, String name){
         mVideoName = name;
-        if (mPlayer == null)
+        if (mController == null)
+            mController = controller;
+        if (mPlayer == null){
+            SurfaceView mVideo = (SurfaceView) findViewById(R.id.guide_video_surface);
+            mVideo.setVisibility(View.VISIBLE);
             mPlayer = player;
+        }
         else{
             AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
             Log.d("MEDIA","set video player");
@@ -360,8 +374,7 @@ public class MainActivity extends ActionBarActivity
                 //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
             }
         }
-        if (mController == null)
-            mController = controller;
+
 
     }
 
@@ -426,7 +439,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        Log.d("Surface","changed");
     }
 
     @Override
