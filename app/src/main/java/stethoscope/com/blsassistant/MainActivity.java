@@ -345,7 +345,9 @@ public class MainActivity extends ActionBarActivity
             mPlayer.prepare();
             mController.setMediaPlayer(this);
             mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
-            mPlayer.start();
+            mController.show(2000);
+            mPlayer.seekTo(1);
+            //mPlayer.start();
             afd.close();
         }
         catch (IllegalArgumentException e)
@@ -439,6 +441,8 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void toggleFullScreen() {
         //start videoactivity here
+        mPlayer.stop();
+        mPlayer.reset();
         Intent videoIntent = new Intent(this, VideoPlayerActivity.class);
         videoIntent.putExtra("VIDEO_RESOURCE_ID",getResources().getIdentifier(mVideoName, "raw", getPackageName()));
         startActivity(videoIntent);
