@@ -52,6 +52,8 @@ public class MainActivity extends ActionBarActivity
     //menu instance for collapsing searchview
     private Menu menu;
 
+    public static PlaceholderFragment currentFragment = null;
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -154,7 +156,7 @@ public class MainActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         //create PlaceholderFragment instance
-        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+        currentFragment = PlaceholderFragment.newInstance(
                 templateType,
                 templateDataArr[index]);
         //display the template
@@ -241,7 +243,7 @@ public class MainActivity extends ActionBarActivity
 
             //display search result
             FragmentManager fragmentManager = getSupportFragmentManager();
-            PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+            currentFragment = PlaceholderFragment.newInstance(
                     DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                     searchResultList);
             fragmentManager.beginTransaction()
@@ -253,7 +255,7 @@ public class MainActivity extends ActionBarActivity
             BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
             searchResultList.setSearchResultArr(null,null);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+            currentFragment = PlaceholderFragment.newInstance(
                     DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                     searchResultList);
 
@@ -284,7 +286,7 @@ public class MainActivity extends ActionBarActivity
         BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
         searchResultList.setSearchResultArr(null,null);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        PlaceholderFragment currentFragment = PlaceholderFragment.newInstance(
+        currentFragment = PlaceholderFragment.newInstance(
                 DETAIL_FRAGMENT_TYPE_BLSSEARCH,
                 searchResultList);
 
@@ -387,6 +389,10 @@ public class MainActivity extends ActionBarActivity
             //create the gesture detector instance
             gestureDetector = new GestureDetector(getActivity(),new MyGestureDetector());
             getView().setOnTouchListener(new fragOnTouchListener());
+        }
+
+        public BlsTemplate getFragTemplate(){
+            return fragTemplate;
         }
 
         private class fragOnTouchListener implements View.OnTouchListener{

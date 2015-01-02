@@ -21,6 +21,7 @@ public class BlsGuide implements BlsTemplate{
     private String guideTitle;
     private BlsData[] guideData;
     private boolean isRepChecked = true;
+    private MediaController mController = null;
 
 
     //Constructor
@@ -104,6 +105,7 @@ public class BlsGuide implements BlsTemplate{
         VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
         MediaController mc = new MediaController(ctx);
         mVideo.setMediaController(mc);
+        mController = mc;
         try{
             String fileName = guideData[index].getUrl()[0];
             String path = "android.resource://" + ctx.getPackageName() + "/" +
@@ -128,10 +130,16 @@ public class BlsGuide implements BlsTemplate{
 
             VideoView mVideo = (VideoView) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
             mVideo.setVisibility(View.GONE);
+            mController = null;
         } catch (IOException e){
 
         }
 
+    }
+
+    public void hideMediaController(){
+        if (mController != null)
+            mController.hide();
     }
 
 

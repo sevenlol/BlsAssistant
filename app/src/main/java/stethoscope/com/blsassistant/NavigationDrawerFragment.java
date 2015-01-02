@@ -191,6 +191,15 @@ public class NavigationDrawerFragment extends Fragment {
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
                 }
 
+                //hide mediacontroller when open the drawer
+                MainActivity.PlaceholderFragment tmpFrag = ((MainActivity) getActivity()).currentFragment;
+                if (tmpFrag != null){
+                    BlsTemplate tmpTemplate = tmpFrag.getFragTemplate();
+                    if (tmpTemplate != null && tmpTemplate instanceof BlsGuide){
+                        ((BlsGuide) tmpTemplate).hideMediaController();
+                    }
+                }
+
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
