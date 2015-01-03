@@ -66,6 +66,7 @@ public class MainActivity extends ActionBarActivity
 
     private MediaPlayer mPlayer = null;
     private VideoControllerView mController = null;
+    private SurfaceHolder mHolder = null;
     private String mVideoName = null;
 
     private boolean onSearchMode = false;
@@ -95,6 +96,60 @@ public class MainActivity extends ActionBarActivity
         updateDrawer();
 
 
+    }
+
+    @Override
+    protected void onPause() {
+        if (mPlayer != null){
+            Log.d("Surface","onPause release video player");
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+            mController = null;
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
+        Log.d("Surface","onResume set video player");
+        try
+        {
+            SurfaceView videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
+            mPlayer = new MediaPlayer();
+            mController = new VideoControllerView(this);
+            videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
+            mHolder = videoSurface.getHolder();
+            mPlayer.reset();
+            //player.setDisplay(videoHolder);
+            mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+            mPlayer.prepare();
+            mController.setMediaPlayer(this);
+            mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
+            mController.show(2000);
+            mPlayer.seekTo(1);
+            //mPlayer.start();
+            afd.close();
+            if (mHolder != null)
+                mPlayer.setDisplay(mHolder);
+        }
+        catch (IllegalArgumentException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+        catch (IllegalStateException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+        catch (IOException e)
+        {
+            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        }
+
+//        if (mHolder != null)
+//            mPlayer.setDisplay(mHolder);
+        super.onResume();
     }
 
     @Override
@@ -336,10 +391,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     //video functions starts
-    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, String name){
+    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, SurfaceHolder holder, String name){
         mVideoName = name;
         if (mController == null)
             mController = controller;
+        if (mHolder == null)
+            mHolder = holder;
         if (mPlayer == null){
             SurfaceView mVideo = (SurfaceView) findViewById(R.id.guide_video_surface);
             mVideo.setVisibility(View.VISIBLE);
@@ -351,7 +408,7 @@ public class MainActivity extends ActionBarActivity
             try
             {
                 mPlayer.reset();
-                //player.setDisplay(videoHolder);
+                mPlayer.setDisplay(mHolder);
                 mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
                 mPlayer.prepare();
                 mController.setMediaPlayer(this);
@@ -440,6 +497,10 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         Log.d("Surface","changed");
+        mHolder = holder;
+        if (mPlayer != null){
+            mPlayer.setDisplay(mHolder);
+        }
     }
 
     @Override
