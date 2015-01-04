@@ -3,7 +3,6 @@ package stethoscope.com.blsassistant;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -15,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -29,9 +27,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
@@ -148,8 +144,6 @@ public class MainActivity extends ActionBarActivity
             //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
         }
 
-//        if (mHolder != null)
-//            mPlayer.setDisplay(mHolder);
         super.onResume();
     }
 
@@ -178,19 +172,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     private void updateDrawer(){
-        String[] titleList = new String[templateDataArr.length];
-        int[] indexList = new int[templateDataArr.length];
-        int[] stepCountList = new int[templateDataArr.length];
-        for (int i=0;i<templateDataArr.length;i++){
-            titleList[i] = templateDataArr[i].getTitle();
-            indexList[i] = i;
-            if (templateDataArr[i] instanceof BlsGuide){
-                stepCountList[i] = ((BlsGuide) templateDataArr[i]).getDataCount();
-            }
-            else{
-                stepCountList[i] = 0;
-            }
-        }
         mNavigationDrawerFragment.updateTitleList(templateDataArr, this);
     }
 
@@ -544,10 +525,7 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public boolean isPlaying() {
-        if (mPlayer != null)
-            return mPlayer.isPlaying();
-
-        return false;
+        return mPlayer != null && mPlayer.isPlaying();
     }
 
     @Override
@@ -669,7 +647,8 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
             //create the gesture detector instance
             gestureDetector = new GestureDetector(getActivity(),new MyGestureDetector());
-            getView().setOnTouchListener(new fragOnTouchListener());
+            if (getView() != null)
+                getView().setOnTouchListener(new fragOnTouchListener());
         }
 
         public BlsTemplate getFragTemplate(){

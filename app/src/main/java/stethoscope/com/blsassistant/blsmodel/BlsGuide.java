@@ -2,9 +2,7 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -20,11 +18,8 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import stethoscope.com.blsassistant.MainActivity;
 import stethoscope.com.blsassistant.VideoControllerView;
 
@@ -37,7 +32,6 @@ public class BlsGuide implements BlsTemplate{
 
 
     //Constructor
-    //TODO: Rep Exposure, fix later depends on performance
     public BlsGuide(String title, BlsData[] data){
         guideData = data;
         guideTitle = title;
@@ -91,7 +85,6 @@ public class BlsGuide implements BlsTemplate{
 
 
                     final View wrapperView = v.findViewById(ctx.getResources().getIdentifier("guide_wrapper_parent_bot","id",ctx.getPackageName()));
-                    RelativeLayout.LayoutParams wrapperParams = (RelativeLayout.LayoutParams) wrapperView.getLayoutParams();
                     final View indicatorView = v.findViewById(ctx.getResources().getIdentifier("guide_step_indicator","id",ctx.getPackageName()));
 
                     ViewTreeObserver vto = indicatorView.getViewTreeObserver();
