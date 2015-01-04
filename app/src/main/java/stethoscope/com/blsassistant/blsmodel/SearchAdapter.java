@@ -105,7 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         // - replace the contents of the view with that element
         if (mTemplate != null){
             holder.mTitleTextView.setText(mTemplate[position].getTitle());
-            holder.mShortDescriptionView.setText("Short Description" + String.valueOf(position));
+            holder.mShortDescriptionView.setText(mTemplate[position].getShortDescription());
             if (mTemplate[position] instanceof BlsGuide){
                 //set step number if this template is a guide
                 holder.mStepNumberView.setText(String.valueOf(((BlsGuide) mTemplate[position]).getDataCount()));

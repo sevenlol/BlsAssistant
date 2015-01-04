@@ -5,19 +5,22 @@
 			"title" : "CPR",
 			"filename" : "cpr.json",
 			"type" : "guide",
-			"path" : "cpr/"
+			"path" : "cpr/",
+			"short": "CPR short description"
 		},
 		{
 			"title" : "Burn Injury",
 			"filename" : "burn_injury.json",
 			"type" : "guide",
-			"path" : "burn_injury/"
+			"path" : "burn_injury/",
+			"short": "Burn injury short description"
 		},
 		{
 		    "title" : "AED Map",
             "filename" : "map_view.json",
             "type" : "map",
-            "path" : "google_map_web/"
+            "path" : "google_map_web/",
+            "short": "AED Map short description"
 		}
 	]
 }

@@ -26,15 +26,17 @@ import stethoscope.com.blsassistant.VideoControllerView;
 
 public class BlsGuide implements BlsTemplate{
     private String guideTitle;
+    private String guideShortDescription;
     private BlsData[] guideData;
     private boolean isRepChecked = true;
     private MediaController mController = null;
 
 
     //Constructor
-    public BlsGuide(String title, BlsData[] data){
+    public BlsGuide(String title, String shortDescription, BlsData[] data){
         guideData = data;
         guideTitle = title;
+        guideShortDescription = shortDescription;
         isRepChecked = checkRep();
     }
 
@@ -220,6 +222,11 @@ public class BlsGuide implements BlsTemplate{
     }
 
     @Override
+    public String getShortDescription() {
+        return guideShortDescription;
+    }
+
+    @Override
     public boolean contains(String searchStr) {
         return guideTitle.toLowerCase().contains(searchStr.toLowerCase());
     }
@@ -239,7 +246,7 @@ public class BlsGuide implements BlsTemplate{
         if (!isRepChecked)
             return false;
 
-        if (guideTitle == null || guideData == null || guideData.length == 0)
+        if (guideTitle == null || guideShortDescription == null || guideData == null || guideData.length == 0)
             return false;
 
         for (int i=0;i< guideData.length;i++){

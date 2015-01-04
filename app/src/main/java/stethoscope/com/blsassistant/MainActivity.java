@@ -270,7 +270,7 @@ public class MainActivity extends ActionBarActivity
         if (!newText.equals("")){
             //not empty
             BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
-            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH",null, null, null);
 
             ArrayList<Integer> tmpIndexArr = new ArrayList<Integer>();
             ArrayList<BlsTemplate> matchTemplateArr = new ArrayList<BlsTemplate>();
@@ -307,7 +307,7 @@ public class MainActivity extends ActionBarActivity
         }
         else{
             BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
-            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+            BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH",null, null, null);
             searchResultList.setSearchResultArr(null,null);
             FragmentManager fragmentManager = getSupportFragmentManager();
             currentFragment = PlaceholderFragment.newInstance(
@@ -339,7 +339,7 @@ public class MainActivity extends ActionBarActivity
 
         //setup search result view
         BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
-        BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH", null, null);
+        BlsSearch searchResultList = (BlsSearch) tmpFactory.getTemplate("SEARCH",null, null, null);
         searchResultList.setSearchResultArr(null,null);
         FragmentManager fragmentManager = getSupportFragmentManager();
         currentFragment = PlaceholderFragment.newInstance(

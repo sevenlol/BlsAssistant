@@ -60,8 +60,9 @@ public class BlsDataReader {
                     String title = tmpObj.getString("title");
                     String typeStr = tmpObj.getString("type");
                     String completePathStr = tmpObj.getString("path") + tmpObj.getString("filename");
+                    String shortDescriptionStr = tmpObj.getString("short");
 
-                    templateFromJSON[i] = tmpFactory.getTemplate(typeStr, title, getBlsData(completePathStr));
+                    templateFromJSON[i] = tmpFactory.getTemplate(typeStr, title, shortDescriptionStr, getBlsData(completePathStr));
                 }
             }
 
@@ -76,7 +77,6 @@ public class BlsDataReader {
     }
 
     private BlsData[] getBlsData(String fileName){
-        //TODO: load BlsData from "templateName".json file
         BlsData[] tmpBlsData = null;
         String tmpJsonStr;
 

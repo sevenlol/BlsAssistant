@@ -4,12 +4,12 @@ package stethoscope.com.blsassistant.blsmodel;
  * Created by stephen on 2014/12/21.
  */
 public class BlsTemplateFactory {
-    public BlsTemplate getTemplate(String type, String title, BlsData[] data){
+    public BlsTemplate getTemplate(String type, String title, String shortDescription, BlsData[] data){
         if (type == null)
             return null;
 
         if (type.equalsIgnoreCase("GUIDE"))
-            return new BlsGuide(title, data);
+            return new BlsGuide(title,shortDescription, data);
         else if (type.equalsIgnoreCase("MAP"))
             return new BlsMap();
         else if (type.equalsIgnoreCase("SEARCH")){
@@ -31,7 +31,7 @@ public class BlsTemplateFactory {
             String[] testDisplayOrder = {"URL", "DESCRIPTION", "DESCRIPTION", "DESCRIPTION", "DESCRIPTION", "DESCRIPTION" };
 
             testBlsData[0] = new BlsData("CPR", testUrl, testDescription, testDisplayOrder);
-            return new BlsGuide("CPR", testBlsData);
+            return new BlsGuide("CPR", "test description", testBlsData);
         }
 
         return null;

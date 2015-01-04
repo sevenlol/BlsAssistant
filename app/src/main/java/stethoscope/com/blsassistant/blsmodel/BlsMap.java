@@ -35,6 +35,11 @@ public class BlsMap implements BlsTemplate{
     }
 
     @Override
+    public String getShortDescription() {
+        return "AED Short Description";
+    }
+
+    @Override
     public boolean contains(String searchStr) {
         return "aed map".contains(searchStr.toLowerCase());
     }

@@ -47,6 +47,11 @@ public class BlsSearch implements BlsTemplate {
     }
 
     @Override
+    public String getShortDescription() {
+        return null;
+    }
+
+    @Override
     public boolean contains(String searchStr) {
         return false;
     }
