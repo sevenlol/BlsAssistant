@@ -577,6 +577,7 @@ public class MainActivity extends ActionBarActivity
          * fragment.
          */
 
+        private static final int ANIMATION_CHANGE_STEP_DURATION = 50;
 
         //constants for swipe event
         private static final int SWIPE_MIN_DISTANCE = 120;
@@ -681,7 +682,7 @@ public class MainActivity extends ActionBarActivity
                                 View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
                                 ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
                                         indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() + indicatorView.getWidth());
-                                objectAnimator.setDuration(200);
+                                objectAnimator.setDuration(ANIMATION_CHANGE_STEP_DURATION);
                                 objectAnimator.start();
                             }
                         }
@@ -696,7 +697,7 @@ public class MainActivity extends ActionBarActivity
                                 View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
                                 ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
                                         indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() - indicatorView.getWidth());
-                                objectAnimator.setDuration(200);
+                                objectAnimator.setDuration(ANIMATION_CHANGE_STEP_DURATION);
                                 objectAnimator.start();
                             }
                         }
@@ -727,6 +728,11 @@ public class MainActivity extends ActionBarActivity
                             //set step title
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                            View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
+                            ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
+                                    indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() + indicatorView.getWidth());
+                            objectAnimator.setDuration(ANIMATION_CHANGE_STEP_DURATION);
+                            objectAnimator.start();
                         }
                         break;
                     case MESSAGE_LAST_STEP: //last step click event for BlsGuide
@@ -737,6 +743,11 @@ public class MainActivity extends ActionBarActivity
                             //set step title
                             String fragTitle = fragTemplate.getDataTitle(currentIndex);
                             ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                            View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
+                            ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
+                                    indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() - indicatorView.getWidth());
+                            objectAnimator.setDuration(ANIMATION_CHANGE_STEP_DURATION);
+                            objectAnimator.start();
                         }
                         break;
                     case MESSAGE_VIDEO_FULLSCREEN:
