@@ -1,5 +1,6 @@
 package stethoscope.com.blsassistant;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -698,6 +699,11 @@ public class MainActivity extends ActionBarActivity
                                 fragTemplate.setView(getView(), ++currentIndex, getActivity(), fragHandler);
                                 String fragTitle = fragTemplate.getDataTitle(currentIndex);
                                 ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                                View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
+                                ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
+                                        indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() + indicatorView.getWidth());
+                                objectAnimator.setDuration(200);
+                                objectAnimator.start();
                             }
                         }
                     }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
@@ -708,6 +714,11 @@ public class MainActivity extends ActionBarActivity
                                 fragTemplate.setView(getView(), --currentIndex, getActivity(), fragHandler);
                                 String fragTitle = fragTemplate.getDataTitle(currentIndex);
                                 ((MainActivity) getActivity()).onSectionAttached(fragTitle);
+                                View indicatorView = getActivity().findViewById(R.id.guide_step_indicator);
+                                ObjectAnimator objectAnimator= ObjectAnimator.ofFloat(
+                                        indicatorView, "translationX", indicatorView.getX(), indicatorView.getX() - indicatorView.getWidth());
+                                objectAnimator.setDuration(200);
+                                objectAnimator.start();
                             }
                         }
                     }
