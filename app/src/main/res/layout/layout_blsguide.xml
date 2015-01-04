@@ -109,12 +109,20 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true">
         <View
+            android:id="@+id/guide_step_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="3dip"
+            android:layout_marginLeft="4dip"
+            android:layout_marginRight="4dip"
+            android:background="#f5c98c"
+            android:layout_alignParentTop="true"/>
+        <View
+            android:layout_alignBottom="@id/guide_step_indicator"
             android:layout_width="match_parent"
             android:layout_height="1dip"
             android:layout_marginLeft="4dip"
             android:layout_marginRight="4dip"
-            android:background="?android:attr/dividerVertical"
-            android:layout_alignParentTop="true"/>
+            android:background="?android:attr/dividerVertical"/>
         <View
             android:id="@+id/ViewColorPickerHelper"
             android:layout_width="1dip"

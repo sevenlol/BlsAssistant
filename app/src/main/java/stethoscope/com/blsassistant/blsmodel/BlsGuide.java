@@ -2,8 +2,10 @@ package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -11,10 +13,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -82,6 +86,36 @@ public class BlsGuide implements BlsTemplate{
 
 
 
+                //set step indicator
+                if (index == 0){
+
+
+                    final View wrapperView = v.findViewById(ctx.getResources().getIdentifier("guide_wrapper_parent_bot","id",ctx.getPackageName()));
+                    RelativeLayout.LayoutParams wrapperParams = (RelativeLayout.LayoutParams) wrapperView.getLayoutParams();
+                    final View indicatorView = v.findViewById(ctx.getResources().getIdentifier("guide_step_indicator","id",ctx.getPackageName()));
+
+                    ViewTreeObserver vto = indicatorView.getViewTreeObserver();
+                    vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @Override
+                        public void onGlobalLayout() {
+                            //Log.d("Width","" + wrapperView.getWidth());
+
+                            indicatorView.setLayoutParams(new RelativeLayout.LayoutParams(
+                                    wrapperView.getWidth()/guideData.length, indicatorView.getHeight()));
+
+
+                            ViewTreeObserver obs = indicatorView.getViewTreeObserver();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                obs.removeOnGlobalLayoutListener(this);
+                            } else {
+                                obs.removeGlobalOnLayoutListener(this);
+                            }
+                        }
+                    });
+                    //params.width = wrapperParams.width / guideData.length;
+                    //indicatorView.setLayoutParams(params);
+
+                }
 
                 //set next step button
                 Button nextStepButton = (Button) v.findViewById(
