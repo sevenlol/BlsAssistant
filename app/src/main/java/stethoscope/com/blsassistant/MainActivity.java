@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
+import stethoscope.com.blsassistant.blsmodel.BlsHome;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
 import stethoscope.com.blsassistant.blsmodel.BlsSearch;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
@@ -48,6 +49,7 @@ public class MainActivity extends ActionBarActivity
      *  Constants
      */
     //DETAIL_* constants are used to specify the current template type in placeholder fragment
+    public static final int DETAIL_FRAGMENT_TYPE_BLSHOME = 0;
     public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
     public static final int DETAIL_FRAGMENT_TYPE_BLSMAP = 2;
     public static final int DETAIL_FRAGMENT_TYPE_BLSSEARCH = 3;
@@ -109,39 +111,41 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     protected void onResume() {
-        AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
-        Log.d("Surface","onResume set video player");
-        try
-        {
-            SurfaceView videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
-            mPlayer = new MediaPlayer();
-            mController = new VideoControllerView(this);
-            videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
-            mHolder = videoSurface.getHolder();
-            mPlayer.reset();
-            //player.setDisplay(videoHolder);
-            mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
-            mPlayer.prepare();
-            mController.setMediaPlayer(this);
-            mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
-            mController.show(2000);
-            mPlayer.seekTo(1);
-            //mPlayer.start();
-            afd.close();
-            if (mHolder != null)
-                mPlayer.setDisplay(mHolder);
-        }
-        catch (IllegalArgumentException e)
-        {
-            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
-        }
-        catch (IllegalStateException e)
-        {
-            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
-        }
-        catch (IOException e)
-        {
-            //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+        if (mVideoName != null){
+            AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
+            Log.d("Surface","onResume set video player");
+            try
+            {
+                SurfaceView videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
+                mPlayer = new MediaPlayer();
+                mController = new VideoControllerView(this);
+                videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
+                mHolder = videoSurface.getHolder();
+                mPlayer.reset();
+                //player.setDisplay(videoHolder);
+                mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+                mPlayer.prepare();
+                mController.setMediaPlayer(this);
+                mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
+                mController.show(2000);
+                mPlayer.seekTo(1);
+                //mPlayer.start();
+                afd.close();
+                if (mHolder != null)
+                    mPlayer.setDisplay(mHolder);
+            }
+            catch (IllegalArgumentException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
+            catch (IllegalStateException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
+            catch (IOException e)
+            {
+                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
+            }
         }
 
         super.onResume();
@@ -208,6 +212,8 @@ public class MainActivity extends ActionBarActivity
             templateType = DETAIL_FRAGMENT_TYPE_BLSGUIDE;
         else if (templateDataArr[index] instanceof BlsMap)
             templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
+        else if (templateDataArr[index] instanceof BlsHome)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSHOME;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         //create PlaceholderFragment instance
@@ -620,6 +626,8 @@ public class MainActivity extends ActionBarActivity
                                  Bundle savedInstanceState) {
             // return view from the appropriate layout file
             switch(fragmentType){
+                case DETAIL_FRAGMENT_TYPE_BLSHOME:
+                    return inflater.inflate(R.layout.layout_blshome, container, false);
                 case DETAIL_FRAGMENT_TYPE_BLSGUIDE:
                     return inflater.inflate(R.layout.layout_blsguide, container, false);
                 case DETAIL_FRAGMENT_TYPE_BLSMAP:

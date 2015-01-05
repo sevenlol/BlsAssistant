@@ -16,11 +16,12 @@ public class DrawerListAdapter extends BaseAdapter {
     public static final int ITEM_VIEW_TYPE_SEPARATOR = 0;
     public static final int ITEM_VIEW_TYPE_BLSGUIDE = 1;
     public static final int ITEM_VIEW_TYPE_BLSMAP = 2;
+    public static final int ITEM_VIEW_TYPE_BLSHOME = 3;
 
-    public static final int[] sectionTypeArr = {ITEM_VIEW_TYPE_BLSGUIDE, ITEM_VIEW_TYPE_BLSMAP};
-    public static final String[] sectionTitleArr = {"Guide", "Map"};
+    public static final int[] sectionTypeArr = {ITEM_VIEW_TYPE_BLSHOME, ITEM_VIEW_TYPE_BLSGUIDE, ITEM_VIEW_TYPE_BLSMAP };
+    public static final String[] sectionTitleArr = {"Home", "Guide", "Map"};
 
-    public static final int ITEM_VIEW_TYPE_COUNT = 3;
+    public static final int ITEM_VIEW_TYPE_COUNT = 4;
 
     private Object[] itemList;
     private int templateLayoutID;

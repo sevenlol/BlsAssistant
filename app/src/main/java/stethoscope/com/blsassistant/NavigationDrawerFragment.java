@@ -33,6 +33,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
+import stethoscope.com.blsassistant.blsmodel.BlsHome;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
 import stethoscope.com.blsassistant.blsmodel.DrawerListAdapter;
@@ -73,7 +74,7 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
     private MenuItem mItem;
 
-    private int mCurrentSelectedPosition = 1;
+    private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -261,25 +262,39 @@ public class NavigationDrawerFragment extends Fragment {
         ArrayList<Integer> indexList = new ArrayList<Integer>();
 
 
+        //add home
+        for (int i=0;i<templateArr.length;i++){
+            if (templateArr[i] instanceof BlsHome){
+                objList.add( new DrawerListAdapter.Template(
+                        templateArr[i].getTitle(),
+                        DrawerListAdapter.ITEM_VIEW_TYPE_BLSHOME,
+                        0 ));
+                indexList.add(i);
+            }
+        }
+
         for (int i=0;i<sectionCount;i++){
-            objList.add( new String(DrawerListAdapter.sectionTitleArr[i]) );
-            indexList.add(-1);
-            for (int j=0;j<templateArr.length;j++){
-                if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE &&
-                        templateArr[j] instanceof BlsGuide){
-                    objList.add( new DrawerListAdapter.Template(
-                            templateArr[j].getTitle(),
-                            DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE,
-                            ((BlsGuide) templateArr[j]).getDataCount()) );
-                    indexList.add(j);
-                }
-                else if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP &&
-                        templateArr[j] instanceof BlsMap){
-                    objList.add( new DrawerListAdapter.Template(
-                            templateArr[j].getTitle(),
-                            DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP,
-                            0 ) );
-                    indexList.add(j);
+            //not home then add title
+            if (DrawerListAdapter.sectionTypeArr[i] != DrawerListAdapter.ITEM_VIEW_TYPE_BLSHOME){
+                objList.add( new String(DrawerListAdapter.sectionTitleArr[i]) );
+                indexList.add(-1);
+                for (int j=0;j<templateArr.length;j++){
+                    if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE &&
+                            templateArr[j] instanceof BlsGuide){
+                        objList.add( new DrawerListAdapter.Template(
+                                templateArr[j].getTitle(),
+                                DrawerListAdapter.ITEM_VIEW_TYPE_BLSGUIDE,
+                                ((BlsGuide) templateArr[j]).getDataCount()) );
+                        indexList.add(j);
+                    }
+                    else if (DrawerListAdapter.sectionTypeArr[i] == DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP &&
+                            templateArr[j] instanceof BlsMap){
+                        objList.add( new DrawerListAdapter.Template(
+                                templateArr[j].getTitle(),
+                                DrawerListAdapter.ITEM_VIEW_TYPE_BLSMAP,
+                                0 ) );
+                        indexList.add(j);
+                    }
                 }
             }
         }

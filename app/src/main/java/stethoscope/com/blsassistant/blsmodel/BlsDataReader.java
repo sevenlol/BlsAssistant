@@ -1,6 +1,7 @@
 package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +52,7 @@ public class BlsDataReader {
         try{
             JSONObject obj = new JSONObject(jsonStr);
             JSONArray jsonArr = obj.getJSONArray(TEMPLATE_LIST_OBJ_KEY);
-
+            //Log.d("DataReader", "" + jsonArr.length());
             if (jsonArr != null){
                 templateFromJSON = new BlsTemplate[jsonArr.length()];
                 BlsTemplateFactory tmpFactory = new BlsTemplateFactory();
@@ -61,8 +62,12 @@ public class BlsDataReader {
                     String typeStr = tmpObj.getString("type");
                     String completePathStr = tmpObj.getString("path") + tmpObj.getString("filename");
                     String shortDescriptionStr = tmpObj.getString("short");
+                    BlsData[] tmpBlsDataArr = null;
 
-                    templateFromJSON[i] = tmpFactory.getTemplate(typeStr, title, shortDescriptionStr, getBlsData(completePathStr));
+                    if (!completePathStr.equals(""))
+                        tmpBlsDataArr = getBlsData(completePathStr);
+
+                    templateFromJSON[i] = tmpFactory.getTemplate(typeStr, title, shortDescriptionStr, tmpBlsDataArr);
                 }
             }
 

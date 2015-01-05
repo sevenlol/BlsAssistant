@@ -1,6 +1,13 @@
 {
 	"template" : 
 	[
+	    {
+    		"title" : "Home",
+    		"filename" : "",
+    		"type" : "home",
+    		"path" : "",
+    		"short": ""
+    	},
 		{
 			"title" : "CPR",
 			"filename" : "cpr.json",

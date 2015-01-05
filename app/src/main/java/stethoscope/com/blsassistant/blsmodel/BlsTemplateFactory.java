@@ -17,6 +17,8 @@ public class BlsTemplateFactory {
             int tmpIndexArr[] = {0,1,2};
             return new BlsSearch();
         }
+        else if (type.equalsIgnoreCase("HOME"))
+            return new BlsHome();
         else if (type.equalsIgnoreCase("TEST_GUIDE")){
             //test object for BlsGuide
             BlsData[] testBlsData = new BlsData[1];
