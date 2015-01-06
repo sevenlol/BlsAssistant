@@ -19,6 +19,8 @@ public class BlsTemplateFactory {
         }
         else if (type.equalsIgnoreCase("HOME"))
             return new BlsHome();
+        else if (type.equalsIgnoreCase("AboutUs"))
+            return new BlsAboutUs();
         else if (type.equalsIgnoreCase("TEST_GUIDE")){
             //test object for BlsGuide
             BlsData[] testBlsData = new BlsData[1];

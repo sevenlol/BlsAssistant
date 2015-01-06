@@ -20,4 +20,7 @@
 
     <string name="description">Media Controls</string>
 
+    <string name="aboutus_thank"><u>致謝</u></string>
+    <string name="aboutus_ratethisapp"><u>請評價軟體</u></string>
+
 </resources>

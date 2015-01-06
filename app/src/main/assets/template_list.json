@@ -28,6 +28,13 @@
             "type" : "map",
             "path" : "google_map_web/",
             "short": "AED Map short description"
-		}
+		},
+		{
+            "title" : "About Us",
+            "filename" : "",
+            "type" : "aboutus",
+            "path" : "",
+            "short": ""
+        }
 	]
 }

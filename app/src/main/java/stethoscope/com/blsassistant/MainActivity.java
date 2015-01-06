@@ -30,6 +30,8 @@ import android.widget.FrameLayout;
 import android.widget.SearchView;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import stethoscope.com.blsassistant.blsmodel.BlsAboutUs;
 import stethoscope.com.blsassistant.blsmodel.BlsDataReader;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsHome;
@@ -53,6 +55,7 @@ public class MainActivity extends ActionBarActivity
     public static final int DETAIL_FRAGMENT_TYPE_BLSGUIDE = 1;
     public static final int DETAIL_FRAGMENT_TYPE_BLSMAP = 2;
     public static final int DETAIL_FRAGMENT_TYPE_BLSSEARCH = 3;
+    public static final int DETAIL_FRAGMENT_TYPE_BLSABOUTUS = 4;
     //public static final String FRAGMENT_TITLE_ARRAY_FLAG = "fragment_title_array";
     public static final String CURRENT_FRAGMENT = "current_fragment";
 
@@ -214,6 +217,8 @@ public class MainActivity extends ActionBarActivity
             templateType = DETAIL_FRAGMENT_TYPE_BLSMAP;
         else if (templateDataArr[index] instanceof BlsHome)
             templateType = DETAIL_FRAGMENT_TYPE_BLSHOME;
+        else if (templateDataArr[index] instanceof BlsAboutUs)
+            templateType = DETAIL_FRAGMENT_TYPE_BLSABOUTUS;
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         //create PlaceholderFragment instance
@@ -634,6 +639,8 @@ public class MainActivity extends ActionBarActivity
                     return inflater.inflate(R.layout.layout_blsmap, container, false);
                 case DETAIL_FRAGMENT_TYPE_BLSSEARCH:
                     return inflater.inflate(R.layout.layout_blssearch, container, false);
+                case DETAIL_FRAGMENT_TYPE_BLSABOUTUS:
+                    return inflater.inflate(R.layout.layout_blsaboutus, container, false);
                 default:
                     return inflater.inflate(R.layout.fragment_blsdetail, container, false);
             }

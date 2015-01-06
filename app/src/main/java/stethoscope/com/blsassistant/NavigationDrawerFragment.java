@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import stethoscope.com.blsassistant.blsmodel.BlsAboutUs;
 import stethoscope.com.blsassistant.blsmodel.BlsGuide;
 import stethoscope.com.blsassistant.blsmodel.BlsHome;
 import stethoscope.com.blsassistant.blsmodel.BlsMap;
@@ -275,7 +276,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         for (int i=0;i<sectionCount;i++){
             //not home then add title
-            if (DrawerListAdapter.sectionTypeArr[i] != DrawerListAdapter.ITEM_VIEW_TYPE_BLSHOME){
+            if (DrawerListAdapter.sectionTypeArr[i] != DrawerListAdapter.ITEM_VIEW_TYPE_BLSHOME &&
+                    DrawerListAdapter.sectionTypeArr[i] != DrawerListAdapter.ITEM_VIEW_TYPE_BLSABOUTUS ){
                 objList.add( new String(DrawerListAdapter.sectionTitleArr[i]) );
                 indexList.add(-1);
                 for (int j=0;j<templateArr.length;j++){
@@ -296,6 +298,19 @@ public class NavigationDrawerFragment extends Fragment {
                         indexList.add(j);
                     }
                 }
+            }
+        }
+
+        //add about us
+        objList.add( "Setting" );
+        indexList.add(-1);
+        for (int i=0;i<templateArr.length;i++){
+            if (templateArr[i] instanceof BlsAboutUs){
+                objList.add( new DrawerListAdapter.Template(
+                        templateArr[i].getTitle(),
+                        DrawerListAdapter.ITEM_VIEW_TYPE_BLSABOUTUS,
+                        0 ));
+                indexList.add(i);
             }
         }
 
