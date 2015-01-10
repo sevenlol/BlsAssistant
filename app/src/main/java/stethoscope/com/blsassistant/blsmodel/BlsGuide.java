@@ -1,8 +1,10 @@
 package stethoscope.com.blsassistant.blsmodel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -48,9 +50,12 @@ public class BlsGuide implements BlsTemplate{
     @Override
     public void setView(View v, int index, Context ctx, Handler handler) {
 
-
             if (checkBlsDataRep(index)){
                 //data not corrupted
+
+                //set up call button
+                Button mCallButton = (Button) v.findViewById(ctx.getResources().getIdentifier("guide_button_call", "id", ctx.getPackageName()));
+                mCallButton.setOnClickListener(new CallButtonListener(ctx));
 
                 //load textview
                 String guideStr = "";
@@ -298,6 +303,20 @@ public class BlsGuide implements BlsTemplate{
             Message msg = new Message();
             msg.what = 2;
             mHandler.sendMessage(msg);
+        }
+    }
+
+    public static class CallButtonListener implements View.OnClickListener {
+        private Context ctx;
+
+        public CallButtonListener(Context ctx) {
+            this.ctx = ctx;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "0963595926"));
+            ctx.startActivity(intent);
         }
     }
 }

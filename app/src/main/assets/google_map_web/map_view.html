@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCXVaGdYMkavpAdFN7-j_65bAMRpmmdoYw"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 		<style>
       		html, body, #googleMap {
         		height: 100%;
@@ -9,57 +10,331 @@
         		padding: 0px;
       		}
     	</style>
+    	<!-- javascript code for AED object -->
+    	<script type="text/javascript" src="aed_obj.js"></script>
+    	<!-- test code for AED object -->
+    	<script type="text/javascript" src="aedarr_test.js"></script>
+    	<!-- test code for Marker and InfoWindow object -->
+    	<script type="text/javascript" src="infowindowarr_test.js"></script>
+    	<!-- infobox object to display eta -->
+    	<script type="text/javascript" src="infobox_packed.js"></script>
 		<script>
 			var map;
+			var currentCoord = new Coord(25.0911,121.5598);
+			var aedArr = [];
+			var markerArr = [];
+			var infoWindowArr = [];
+			var etaArr = [];
+			var etaIconArr = [];
+			var directionsService = new google.maps.DirectionsService();
+
+			var httpCallBack = function(jsonStr, index){
+				alert("index: " + index);
+				alert("jsonStr: " + jsonStr);
+			};
 
 			function initialize() {
-  				var mapOptions = {
-    				zoom: 12
+				/**
+				 *  Google map initialization.
+				 */
+  				var mapProp = {
+    				center:new google.maps.LatLng(25.0911,121.5598),
+    				zoom:14,
+    				mapTypeId:google.maps.MapTypeId.ROADMAP
   				};
-  				map = new google.maps.Map(document.getElementById('googleMap'),
-      						mapOptions);
+  				map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-  				// Try HTML5 geolocation
-  				if(navigator.geolocation) {
-    				navigator.geolocation.getCurrentPosition(function(position) {
-      					var pos = new google.maps.LatLng(position.coords.latitude,
-            	                           position.coords.longitude);
 
-      					var infowindow = new google.maps.InfoWindow({
-        					map: map,
-        					position: pos,
-        					content: 'Your Location.'
-      					});
+  				/**
+  				 *  test code that display three markers
+  				 *  click on each marker pops up a infowindow
+  				 */
+  				aedArr = testAedArr;
+  				//makeDirectionsRequest(currentCoord, aedArr[2], 2, "walking");
+  				calculateEtaAndUpdateArr("walking");
 
-      					map.setCenter(pos);
-    				}, function() {
-      					handleNoGeolocation(true);
-    				});
-  				} 
-  				else {
-    				// Browser doesn't support Geolocation
-    				handleNoGeolocation(false);
-  				}
+  				
+  				markerArr = createMarkerTestArr(3);
+  				infoWindowArr = createInfoWindowTestArr(3);
+  				setInfoWindowListener();
+  				setMarkers(map);
+  				/**
+  				 * real code
+  				 */
+
+  				//placeholder for a function that updates currentCoord
+
+  				//loadData(currentCoord);
+
+  				//updateInfoWindows();
+
+  				//updateMarkers();
+
+  				//updateETAIcons(currentCoord);
+
 			}
-
-			function handleNoGeolocation(errorFlag) {
-  				if (errorFlag) {
-    				var content = 'Error: The Geolocation service failed.';
-  				} else {
-    				var content = 'Error: Your browser doesn\'t support geolocation.';
-  				}
-
-  				var options = {
-    				map: map,
-    				position: new google.maps.LatLng(60, 105),
-    				content: content
-  				};
-
-  				var infowindow = new google.maps.InfoWindow(options);
-  				map.setCenter(options.position);
-			}
-
 			google.maps.event.addDomListener(window, 'load', initialize);
+
+
+			function loadData(coord){
+				/** load AED data from files and modify aedArr
+				 *
+				 *  @param  coord  an Coord object that represents the current
+				 *                 location
+				 *  @modify aedArr
+				 */
+			}
+
+			function createInfoWindow(aed){
+				/** create an InfoWindow object (google map API) that display
+				 *      the detail information of the AED object (input)
+				 *
+				 *  @param  aed  an AED object (see aed_obj.js)
+				 *  @return      the created InfoWindow object
+				 */
+
+			}
+
+			function updateInfoWindows(){
+				/** create new InfoWindow objects and update infoWindowArr
+				 *      based on the current aedArr
+				 *
+				 *  @param
+				 *  @return
+				 *  @modify  infoWindowArr
+				 */
+				 // set infoWindowArr to empty (not null)
+				 infoWindowArr = [];
+				 for (var i=0;i<aedArr.length;i++){
+				 	infoWindowArr.push(createInfoWindow(aedArr[i]));
+				 }
+			}
+
+			function createMarker(aed, infoWindow){
+				/** create a marker that represents the AED object (input) and
+				 *      contains the infoWindow (input)
+				 *
+				 *  @param  aed        an AED object that is used to create
+				 *                     the marker
+				 *  @param  infoWindow an InfoWindow object (google map API)
+				 *                     that is going to popup when the marker
+				 *                     is clicked
+				 *  @return            generated marker
+				 */
+			}
+
+			function updateMarkers(){
+				/** create new markers and update markerArr based on the
+				 *      current aedArr and infoWindowArr
+				 *
+				 *  @param
+				 *  @return
+				 *  @modify  markerArr
+				 */
+				//clear markerArr
+				deleteMarkers();
+				for (var i=0;i<aedArr.length;i++){
+					markerArr.push(createMarker(aedArr[i], infoWindowArr[i]));
+				}
+				setInfoWindowListener();
+				//pin markers to the map
+				setMarkers(map);
+			}
+
+			function setInfoWindowListener() {
+				for (var i=0;i<markerArr.length;i++) {
+  					var marker = markerArr[i];
+  					var infoWindow = infoWindowArr[i];
+					google.maps.event.addListener(marker, 'click', function(marker, infoWindow) {
+  						return function() {
+  								infoWindow.open(map, marker);
+  						}
+  					}(marker, infoWindow));
+				}
+			}
+
+			function deleteMarkers() {
+				/** remove all markers from the map and set markerArr to empty
+				 *      (not null)
+				 *
+				 *  @param
+				 *  @return
+				 *  @modify  markerArr
+				 */
+				setMarkers(null);
+				markerArr = [];
+			}
+
+			function setMarkers(map) {
+				/** pin all markers to the map
+				 *
+				 *  @param
+				 *  @return
+				 *  @modify  markerArr
+				 */
+				for (var i=0;i<markerArr.length;i++) {
+					markerArr[i].setMap(map);
+				}
+			}
+
+			function calculateEtaAndUpdateArr(travelMode) {
+				/** 1. iterates through etaArr and calculate the ETAs
+				 *  2. update etaArr
+				 *  3. create etaIcon and update etaIconArr
+				 *
+				 *  @param  travelMode 'walking' or 'driving'
+				 *  @return
+				 *                     
+				 */
+
+				//clear etaIconArr
+				deleteEtaIcons();
+				etaArr = [];
+
+				//calculate eta and update arrays
+				for (var i = 0; i < aedArr.length; i++) {
+					makeDirectionsRequest(currentCoord, aedArr[i], i, travelMode);
+				}
+			}
+
+			function deleteEtaIcons() {
+				/** remove all etaIcons from the map and set etaIconArr to empty
+				 *
+				 *  @param
+				 *  @return
+				 *  @modify  etaIconArr
+				 */
+				for (var i = 0; i < etaIconArr.length; i++) {
+					if (etaIconArr[i] != undefined)
+						etaIconArr[i].close();
+				}
+				etaIconArr = [];
+			}
+
+			function makeDirectionsRequest(coord, aed, index, travelMode) {
+				/** 1. make directionService request using google map API
+				 *  2. retrieve duration value (in sec) in the DirectionsResult
+				 *         object and calculate the total duration
+				 *  3. update etaArr
+				 *  4. create etaIcon and update etaIconArr
+				 *	
+ 				 *  @param  coord       coord of current location
+ 				 *  @param  aed         aed object to calculate the ETA
+ 				 *  @param  index       the index of {@paramref aed} in aedArr
+ 				 * 	@param  travelMode  'walking' or 'driving'
+				 *
+				 */
+
+				var originLatLng = new google.maps.LatLng(coord.lat, coord.lng);
+				var destinationLatLng = new google.maps.LatLng(aed.coord.lat, aed.coord.lng);
+
+				var request = {};
+				//set parameters of the request
+				request['origin']      = originLatLng;
+				request['destination'] = destinationLatLng;
+				if (travelMode === "driving")
+					request['travelMode'] = google.maps.TravelMode.DRIVING;
+				else if (travelMode === "walking")
+					request['travelMode'] = google.maps.TravelMode.WALKING;
+
+				//make request
+  				directionsService.route(request, function(response, status) {
+    				if (status == google.maps.DirectionsStatus.OK) {
+    					//alert(response.routes[0].legs[0].duration.value);
+      					var eta = getDurationFromResultObj(response);
+      					//alert("Total duration: " + eta);
+      					var etaIcon = createETAIcon(aed.coord, eta, travelMode);
+      					etaArr[index] = eta;
+      					etaIconArr[index] = etaIcon;
+    				}
+  				});
+			}
+
+			function getDurationFromResultObj(resultObj){
+				/** parse google.maps.DirectionsResult from google 
+				 *      directions API and retrieve 'duration' values 
+				 *      that represents the estimated time of arrival
+				 *      and calcualte the summation of the values.
+				 *
+				 *  @param  resultObj DirectionsResult object from 
+				 *                    google directions API
+				 *  @return           total estimated time of arrival
+				 *                    (in sec)
+				 *
+				 *  note: resultObj is assumed to have only 1 route
+				 *        if not, the sum of the first route's duration
+				 *        is returned. 
+				 */
+
+				var totalDuration = 0;
+				var resultRoute = resultObj.routes[0];
+				for (var i = 0; i < resultRoute.legs.length; i++) {
+					totalDuration += resultRoute.legs[i].duration.value;
+				}
+				return totalDuration;
+			}
+
+			function createETAIcon(coord, eta, travelMode){
+				/** create an eta icon that display the estimated time
+				 *      of arrival
+				 *
+				 *  @param  coord       the coordination of the center 
+				 *                      of etaIcon
+				 *  @param  eta         the estimated time of arrival
+				 *  @param  travelMode  walking or driving
+				 *  @return             the created etaIcon
+				 *
+				 *  note: InfoBox from google.maps.utility.library
+				 */
+
+				var boxText = document.createElement("div");
+				boxText.style.cssText = "font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif;background-color:#9B4A4A;-webkit-border-radius: 8px;height:25px;padding-top:2px;padding-right:5px;";
+				var labelText = "";
+				labelText += "<img src=\"icon/walking-white.svg\" style=\"height:16px;width:12px;margin-left:8px;margin-top:3px;float:left;\">" + secToTimeStr(eta);
+				boxText.innerHTML = labelText;
+				var centerLoc = new google.maps.LatLng(coord.lat, coord.lng);
+
+				var myOptions = {
+			 		content: boxText,
+					boxStyle: {
+			  			textAlign: "center",
+			  			color: "#F5F5F5",
+			  			fontSize: "11pt",
+			  			width: "90px"
+			 		},
+					disableAutoPan: true,
+					pixelOffset: new google.maps.Size(-45, 0),
+					position: centerLoc,
+					closeBoxURL: "",
+					isHidden: false,
+					pane: "mapPane",
+					enableEventPropagation: true
+				};
+
+				var ibLabel = new InfoBox(myOptions);
+				ibLabel.open(map);
+				return ibLabel;
+			}
+
+			function secToTimeStr(sec){
+				/** helper function, turn seconds into hh:mm:ss string
+				 *  
+				 *  @param  sec  integer representing second (e.g., 53
+				 *               means 53 seconds)
+				 *  @return      time string (in hh:mm:ss format)
+				 */
+
+				var sec_num = sec;
+    			var hours   = Math.floor(sec_num / 3600);
+    			var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    			var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    			if (hours   < 10) {hours   = "0"+hours;}
+    			if (minutes < 10) {minutes = "0"+minutes;}
+   				if (seconds < 10) {seconds = "0"+seconds;}
+    			var time    = hours+'h'+minutes+'m';
+    			return time;
+			}
 		</script>
 	</head>
 

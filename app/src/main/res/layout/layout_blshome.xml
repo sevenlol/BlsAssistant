@@ -44,6 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     cardview:cardBackgroundColor="@color/bright_foreground_inverse_material_light"
                     cardview:contentPadding="1dip"
                     >
@@ -81,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_toRightOf="@id/home_popular_item_01"
+                    android:foreground="?android:attr/selectableItemBackground"
                     cardview:cardBackgroundColor="@color/bright_foreground_inverse_material_light"
                     cardview:contentPadding="1dip"
                     >
@@ -117,6 +119,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_toRightOf="@id/home_popular_item_02"
+                    android:foreground="?android:attr/selectableItemBackground"
                     cardview:cardBackgroundColor="@color/bright_foreground_inverse_material_light"
                     cardview:contentPadding="1dip"
                     >
