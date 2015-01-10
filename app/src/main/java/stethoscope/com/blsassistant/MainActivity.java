@@ -70,6 +70,7 @@ public class MainActivity extends ActionBarActivity
     private VideoControllerView mController = null;
     private SurfaceHolder mHolder = null;
     private String mVideoName = null;
+    private SurfaceView videoSurface = null;
 
     private boolean onSearchMode = false;
 
@@ -97,6 +98,8 @@ public class MainActivity extends ActionBarActivity
 
         updateDrawer();
 
+        videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
+
 
     }
 
@@ -113,44 +116,19 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    protected void onResume() {
-        if (mVideoName != null){
-            AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
-            Log.d("Surface","onResume set video player");
-            try
-            {
-                SurfaceView videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
-                mPlayer = new MediaPlayer();
-                mController = new VideoControllerView(this);
-                videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
-                mHolder = videoSurface.getHolder();
-                mPlayer.reset();
-                //player.setDisplay(videoHolder);
-                mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
-                mPlayer.prepare();
-                mController.setMediaPlayer(this);
-                mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
-                mController.show(2000);
-                mPlayer.seekTo(1);
-                //mPlayer.start();
-                afd.close();
-                if (mHolder != null)
-                    mPlayer.setDisplay(mHolder);
-            }
-            catch (IllegalArgumentException e)
-            {
-                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
-            }
-            catch (IllegalStateException e)
-            {
-                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
-            }
-            catch (IOException e)
-            {
-                //Log.e(TAG, "Unable to play audio queue do to exception: " + e.getMessage(), e);
-            }
+    protected void onDestroy() {
+        if (mPlayer != null){
+            Log.d("Surface","onDestroy release video player");
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+            mController = null;
         }
+        super.onDestroy();
+    }
 
+    @Override
+    protected void onResume() {
         super.onResume();
     }
 
@@ -391,16 +369,19 @@ public class MainActivity extends ActionBarActivity
         if (mHolder == null)
             mHolder = holder;
         if (mPlayer == null){
-            SurfaceView mVideo = (SurfaceView) findViewById(R.id.guide_video_surface);
-            mVideo.setVisibility(View.VISIBLE);
+            Log.d("Surface","mPlayer NULL");
+            videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
+            videoSurface.setVisibility(View.VISIBLE);
             mPlayer = player;
         }
         else{
             AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
-            Log.d("MEDIA","set video player");
+            Log.d("Surface","set video player");
             try
             {
                 mPlayer.reset();
+                if (videoSurface != null)
+                    mHolder = videoSurface.getHolder();
                 mPlayer.setDisplay(mHolder);
                 mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
                 mPlayer.prepare();
@@ -449,7 +430,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (mPlayer == null){
-            SurfaceView videoSurface = (SurfaceView) findViewById(getResources().getIdentifier("guide_video_surface", "id", getPackageName()));
+            //SurfaceView videoSurface = (SurfaceView) findViewById(getResources().getIdentifier("guide_video_surface", "id", getPackageName()));
             SurfaceHolder videoHolder = videoSurface.getHolder();
             videoHolder.addCallback(this);
 
@@ -499,6 +480,10 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d("Surface","destroyed");
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+        }
         mPlayer = null;
         mController = null;
     }
