@@ -58,18 +58,21 @@
                 android:orientation="horizontal"
                 android:layout_centerInParent="true">
                 <ImageButton
+                    android:id="@+id/aboutus_fb"
                     android:layout_width="98dp"
                     android:layout_height="98dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:scaleType="centerCrop"
                     android:src="@drawable/fb_icon"/>
                 <ImageButton
+                    android:id="@+id/aboutus_website"
                     android:layout_width="98dp"
                     android:layout_height="98dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:scaleType="centerCrop"
                     android:src="@drawable/web_icon"/>
                 <ImageButton
+                    android:id="@+id/aboutus_google_plus"
                     android:layout_width="98dp"
                     android:layout_height="98dp"
                     android:background="?android:attr/selectableItemBackground"
