@@ -2,7 +2,7 @@
 	"template" : 
 	[
 	    {
-    		"title" : "Home",
+    		"title" : "首頁",
     		"filename" : "",
     		"type" : "home",
     		"path" : "",
@@ -23,14 +23,14 @@
 			"short": "Burn injury short description"
 		},
 		{
-		    "title" : "AED Map",
+		    "title" : "AED地圖",
             "filename" : "map_view.json",
             "type" : "map",
             "path" : "google_map_web/",
             "short": "AED Map short description"
 		},
 		{
-            "title" : "About Us",
+            "title" : "關於",
             "filename" : "",
             "type" : "aboutus",
             "path" : "",

@@ -15,21 +15,21 @@
         android:layout_alignParentTop="true">
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dip"
+            android:layout_height="0dip"
             android:layout_marginLeft="4dip"
             android:layout_marginRight="4dip"
             android:background="?android:attr/dividerVertical"
             android:layout_alignParentBottom="true"/>
         <View
             android:id="@+id/ViewColorPickerHelperTop"
-            android:layout_width="1dip"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="4dip"
             android:layout_marginTop="4dip"
             android:background="?android:attr/dividerVertical"
-            android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/>
         <Button
             android:id="@+id/guide_button_call"
             android:layout_width="wrap_content"
@@ -37,8 +37,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@id/ViewColorPickerHelperTop"
-            android:background="?android:attr/selectableItemBackground"
+            android:drawableLeft="@drawable/call_icon_white"
+            android:drawableStart="@drawable/call_icon_white"
+            android:paddingLeft="20dp"
+            android:background="#CC0000"
+            android:layout_margin="3dip"
             android:text="@string/call_button"
+            android:textColor="#ffffff"
             android:layout_alignParentBottom="true"/>
         <Button
             android:id="@+id/guide_button_voice"
@@ -46,8 +51,13 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="?android:attr/selectableItemBackground"
+            android:drawableLeft="@drawable/voice_icon_white"
+            android:drawableStart="@drawable/voice_icon_white"
+            android:paddingLeft="20dp"
+            android:background="#669900"
+            android:layout_margin="3dip"
             android:text="@string/voice_button"
+            android:textColor="#ffffff"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/ViewColorPickerHelperTop"/>
     </RelativeLayout>

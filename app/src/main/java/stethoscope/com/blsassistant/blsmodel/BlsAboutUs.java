@@ -44,12 +44,12 @@ public class BlsAboutUs implements BlsTemplate {
 
     @Override
     public String getDataTitle(int index) {
-        return "About Us";
+        return "關於";
     }
 
     @Override
     public String getTitle() {
-        return "About Us";
+        return "關於";
     }
 
     @Override

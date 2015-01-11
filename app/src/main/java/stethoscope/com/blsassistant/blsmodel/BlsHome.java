@@ -48,12 +48,12 @@ public class BlsHome implements BlsTemplate {
 
     @Override
     public String getDataTitle(int index) {
-        return "Home";
+        return "首頁";
     }
 
     @Override
     public String getTitle() {
-        return "Home";
+        return "首頁";
     }
 
     @Override

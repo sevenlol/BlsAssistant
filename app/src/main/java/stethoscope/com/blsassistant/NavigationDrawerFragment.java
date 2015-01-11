@@ -301,9 +301,10 @@ public class NavigationDrawerFragment extends Fragment {
             }
         }
 
-        //add about us
-        objList.add( "Setting" );
+        //add "other" label
+        objList.add( "" );
         indexList.add(-1);
+        //add about us
         for (int i=0;i<templateArr.length;i++){
             if (templateArr[i] instanceof BlsAboutUs){
                 objList.add( new DrawerListAdapter.Template(

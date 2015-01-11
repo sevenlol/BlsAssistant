@@ -20,7 +20,7 @@ public class DrawerListAdapter extends BaseAdapter {
     public static final int ITEM_VIEW_TYPE_BLSABOUTUS = 4;
 
     public static final int[] sectionTypeArr = {ITEM_VIEW_TYPE_BLSHOME, ITEM_VIEW_TYPE_BLSGUIDE, ITEM_VIEW_TYPE_BLSMAP, ITEM_VIEW_TYPE_BLSABOUTUS};
-    public static final String[] sectionTitleArr = {"Home", "Guide", "Map","About Us"};
+    public static final String[] sectionTitleArr = {"Home", "教學", "地圖","About Us"};
 
     public static final int ITEM_VIEW_TYPE_COUNT = 5;
 

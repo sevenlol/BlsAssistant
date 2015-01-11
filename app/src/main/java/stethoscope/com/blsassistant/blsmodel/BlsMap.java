@@ -26,12 +26,12 @@ public class BlsMap implements BlsTemplate{
 
     @Override
     public String getDataTitle(int index) {
-        return "AED Map";
+        return "AED地圖";
     }
 
     @Override
     public String getTitle() {
-        return "AED Map";
+        return "AED地圖";
     }
 
     @Override

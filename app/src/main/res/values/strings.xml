@@ -10,10 +10,10 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
-    <string name="next_step">Next Step</string>
-    <string name="last_step">Last Step</string>
-    <string name="call_button">Call</string>
-    <string name="voice_button">Voice</string>
+    <string name="next_step">下一步</string>
+    <string name="last_step">上一步</string>
+    <string name="call_button">緊急電話</string>
+    <string name="voice_button">語音教學</string>
 
     <string name="search_title">Search</string>
     <string name="search_hint">Hint</string>
