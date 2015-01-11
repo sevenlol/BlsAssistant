@@ -288,9 +288,9 @@
 				 */
 
 				var boxText = document.createElement("div");
-				boxText.style.cssText = "font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif;background-color:#9B4A4A;-webkit-border-radius: 8px;height:25px;padding-top:2px;padding-right:5px;";
-				var labelText = "";
-				labelText += "<img src=\"icon/walking-white.svg\" style=\"height:16px;width:12px;margin-left:8px;margin-top:3px;float:left;\">" + secToTimeStr(eta);
+				boxText.style.cssText = "font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif;background-color:#9B4A4A;-webkit-border-radius: 8px;height:25px;padding:0px;margin:0px;";
+				var labelText = "<div style=\"margin:auto;\">";
+				labelText += "<img src=\"icon/walking-white.svg\" style=\"height:16px;width:12px;margin-left:8px;margin-top:3px;float:left;\"><p style=\"margin: auto;padding-top:2px;\">" + secToTimeStr(eta) + "</p></div>";
 				boxText.innerHTML = labelText;
 				var centerLoc = new google.maps.LatLng(coord.lat, coord.lng);
 
@@ -299,8 +299,10 @@
 					boxStyle: {
 			  			textAlign: "center",
 			  			color: "#F5F5F5",
-			  			fontSize: "11pt",
-			  			width: "90px"
+			  			fontSize: "12pt",
+			  			width: "90px",
+			  			height: "25px",
+			  			padding: "0px",
 			 		},
 					disableAutoPan: true,
 					pixelOffset: new google.maps.Size(-45, 0),

@@ -1,5 +1,5 @@
 var INDEX_MAX = 3;
-
+var AED_ICON_PATH = "icon/aed/aed-32.png";
 
 function createInfoWindowTestArr(indexMax){
 	var infoWindowTestArr = [];
@@ -29,7 +29,8 @@ function createMarkerTestObject(index){
 	var marker = new google.maps.Marker({
 		position: latLng,
 		map: null,
-		title: "title " + index
+		title: "title " + index,
+		icon: AED_ICON_PATH
 	});
 	return marker;
 }
