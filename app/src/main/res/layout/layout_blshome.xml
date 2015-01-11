@@ -170,8 +170,14 @@
             android:id="@+id/home_button_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="@string/call_button"/>
+            android:drawableLeft="@drawable/call_icon_white_36"
+            android:drawableStart="@drawable/call_icon_white_36"
+            android:paddingLeft="50dp"
+            android:background="#CC0000"
+            android:layout_margin="0dp"
+            android:textSize="30sp"
+            android:text="@string/call_button"
+            android:textColor="#ffffff"/>
     </LinearLayout>
 
 
