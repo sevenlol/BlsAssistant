@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import java.io.IOException;
@@ -39,6 +40,7 @@ import stethoscope.com.blsassistant.blsmodel.BlsMap;
 import stethoscope.com.blsassistant.blsmodel.BlsSearch;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplate;
 import stethoscope.com.blsassistant.blsmodel.BlsTemplateFactory;
+import stethoscope.com.blsassistant.blsmodel.ThankListDialog;
 
 
 public class MainActivity extends ActionBarActivity
@@ -99,7 +101,6 @@ public class MainActivity extends ActionBarActivity
         updateDrawer();
 
         videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
-
 
     }
 

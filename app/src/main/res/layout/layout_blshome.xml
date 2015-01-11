@@ -131,7 +131,7 @@
                             android:layout_width="98dp"
                             android:layout_height="98dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/map_icon"/>
+                            android:src="@drawable/aed_64"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">BlsAssistant</string>
+    <string name="app_name">急救常識</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -20,7 +20,10 @@
 
     <string name="description">Media Controls</string>
 
-    <string name="aboutus_thank"><u>致謝</u></string>
-    <string name="aboutus_ratethisapp"><u>請評價軟體</u></string>
+    <string name="about_us_thank"><u>誌謝</u></string>
+    <string name="about_us_rate_this_app"><u>請評價軟體</u></string>
+
+    <string name="thank_cancel_button">關閉</string>
+    <string name="thank_title">誌謝</string>
 
 </resources>
