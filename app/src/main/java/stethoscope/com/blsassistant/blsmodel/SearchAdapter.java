@@ -115,9 +115,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 holder.mStepNumberView.setVisibility(View.GONE);
             }
 
+            //set search item icon
+            String searchItemIconPath;
+
+            if (mTemplate[position] instanceof BlsMap)
+                searchItemIconPath = "search_item_icon_map.png";
+            else
+                searchItemIconPath = "search_item_icon_guide.png";
+
             InputStream ims = null;
             try {
-                ims = ctx.getAssets().open("search_item_icon.png");
+                ims = ctx.getAssets().open(searchItemIconPath);
                 Drawable d = Drawable.createFromStream(ims, null);
                 Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
                 Drawable dNew = new BitmapDrawable(ctx.getResources(), Bitmap.createScaledBitmap(bitmap, 49, 49, true));
