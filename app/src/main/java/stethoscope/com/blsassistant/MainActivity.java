@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +30,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -100,7 +103,7 @@ public class MainActivity extends ActionBarActivity
 
         updateDrawer();
 
-        videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
+        //videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
 
     }
 
@@ -363,17 +366,14 @@ public class MainActivity extends ActionBarActivity
     }
 
     //video functions starts
-    public void setVideoPlayer(MediaPlayer player, VideoControllerView controller, SurfaceHolder holder, String name){
+    public void setVideoName(String name){
         mVideoName = name;
-        if (mController == null)
-            mController = controller;
-        if (mHolder == null)
-            mHolder = holder;
+
         if (mPlayer == null){
             Log.d("Surface","mPlayer NULL");
             videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
-            videoSurface.setVisibility(View.VISIBLE);
-            mPlayer = player;
+            mHolder = videoSurface.getHolder();
+            mHolder.addCallback(this);
         }
         else{
             AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
@@ -390,7 +390,6 @@ public class MainActivity extends ActionBarActivity
                 mController.setAnchorView((FrameLayout) findViewById(R.id.guide_video));
                 mController.show(2000);
                 mPlayer.seekTo(1);
-                //mPlayer.start();
                 afd.close();
             }
             catch (IllegalArgumentException e)
@@ -408,10 +407,6 @@ public class MainActivity extends ActionBarActivity
         }
 
 
-    }
-
-    public MediaPlayer getMPlayer(){
-        return mPlayer;
     }
 
     private class VideoOnTouchListener implements View.OnTouchListener{
@@ -432,14 +427,15 @@ public class MainActivity extends ActionBarActivity
     public void surfaceCreated(SurfaceHolder holder) {
         if (mPlayer == null){
             //SurfaceView videoSurface = (SurfaceView) findViewById(getResources().getIdentifier("guide_video_surface", "id", getPackageName()));
+            videoSurface = (SurfaceView) findViewById(R.id.guide_video_surface);
             SurfaceHolder videoHolder = videoSurface.getHolder();
             videoHolder.addCallback(this);
-
+            mHolder = holder;
             mPlayer = new MediaPlayer();
             mController = new VideoControllerView(this);
+            mPlayer.setDisplay(holder);
             videoSurface.setOnTouchListener(new VideoOnTouchListener(mController));
         }
-        mPlayer.setDisplay(holder);
         AssetFileDescriptor afd = getResources().openRawResourceFd(getResources().getIdentifier(mVideoName, "raw", getPackageName()));
         Log.d("MEDIA","SURFACE_CREATED");
         try

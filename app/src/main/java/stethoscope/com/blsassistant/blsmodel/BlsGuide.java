@@ -152,42 +152,9 @@ public class BlsGuide implements BlsTemplate{
         FrameLayout mVideo = (FrameLayout) v.findViewById(ctx.getResources().getIdentifier("guide_video", "id", ctx.getPackageName()));
         mVideo.setVisibility(View.VISIBLE);
 
-        if (((MainActivity) ctx).getMPlayer() == null){
-            Log.d("Guide","Surface mPlayer null");
+        String fileName = guideData[index].getUrl()[0];
+        ((MainActivity) ctx).setVideoName(fileName.substring(0,fileName.indexOf(".")));
 
-            SurfaceView videoSurface = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
-            SurfaceHolder videoHolder = videoSurface.getHolder();
-            videoHolder.addCallback((MainActivity) ctx);
-
-            MediaPlayer player = new MediaPlayer();
-            VideoControllerView controller = new VideoControllerView(ctx);
-            videoSurface.setOnTouchListener(new VideoOnTouchListener(controller));
-            String fileName = guideData[index].getUrl()[0];
-            ((MainActivity) ctx).setVideoPlayer(player,controller,videoHolder,fileName.substring(0,fileName.indexOf(".")));
-        }
-        else{
-            Log.d("Guide","Surface mPlayer not null");
-            String fileName = guideData[index].getUrl()[0];
-            ((MainActivity) ctx).setVideoPlayer(null,null,null, fileName.substring(0,fileName.indexOf(".")));
-        }
-
-
-        /*
-        SurfaceView mVideo = (SurfaceView) v.findViewById(ctx.getResources().getIdentifier("guide_video_surface", "id", ctx.getPackageName()));
-        MediaController mc = new MediaController(ctx);
-        mVideo.setMediaController(mc);
-        mController = mc;
-        try{
-            String fileName = guideData[index].getUrl()[0];
-            String path = "android.resource://" + ctx.getPackageName() + "/" +
-                    ctx.getResources().getIdentifier(fileName.substring(0,fileName.indexOf(".")),"raw",ctx.getPackageName());
-            mVideo.setVideoURI(Uri.parse(path));
-            mVideo.setVisibility(View.VISIBLE);
-            mVideo.seekTo(100);
-            //mVideo.start();
-        } catch (Exception e){
-
-        }*/
     }
 
     private void setImageView(View v, Context ctx, int index){
@@ -260,20 +227,6 @@ public class BlsGuide implements BlsTemplate{
         }
 
         return true;
-    }
-
-    private class VideoOnTouchListener implements View.OnTouchListener{
-        VideoControllerView controller;
-
-        public VideoOnTouchListener(VideoControllerView controller){
-            this.controller = controller;
-        }
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            controller.show();
-            return false;
-        }
     }
 
     private class NextStepButtonListener implements View.OnClickListener{
