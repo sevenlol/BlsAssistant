@@ -1,0 +1,29 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["患者先保持鎮定，以最舒服的姿勢坐好，維持緩慢和放鬆的呼吸。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["詢問患者是否攜帶隨身藥物，依醫生處方先使用支氣管擴張劑。\n若效果不好，間隔5分鐘後再噴一次(最多噴三次)，著未好轉需儘速就醫。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["也可口服隨身攜帶的藥物，約40分鐘才見效。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["給予氧氣使用改善缺氧現象。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

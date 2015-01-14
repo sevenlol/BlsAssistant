@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "基本處理",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["大量生理食鹽水或林格氏液灌洗，每個傷口至少需150ml的水溶液用18號的針頭及30～50ml的針筒來清洗傷口。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["懷疑有狂犬病感染的可能，則用大量優碘溶液清理傷口，可減少90%狂犬病的感染。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["再用肥皂水或消毒水徹底洗淨。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["傷口若有大量出血時，以直接加壓法止血並包紮傷口。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["送醫治療(由醫師決定是否注射狂犬病疫苗)。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟五",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["手部咬傷的傷口、深部穿孔的傷口、傷口處理延遲超過24小時及臨床上有感染現象的傷口均不應予以縫合。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

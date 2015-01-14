@@ -1,0 +1,29 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["保持鎮靜，避免亂動肢體。記住時間、蛇的形狀、顏色及其它可能的特徵。\n避免口吸造成傷口感染、或救援者毒害。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["移除受傷肢體上之束縛物，包括：戒指、手環手錶等，並保持低於心臟之位置。\n以夾板或護木固定患肢。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["以具彈性的衣料，在心臟及傷口之間給予壓迫性包紮，不須束太緊，必須容許手指頭伸入的空間且維持血流暢通，避免患之壞死。\n勿局部切開傷口，易造成感染或癒合不良。\n避免中草藥敷治傷口，以免增加傷口的感染機會。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["呼叫119。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

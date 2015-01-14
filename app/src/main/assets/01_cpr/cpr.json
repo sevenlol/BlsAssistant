@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "叫：叫病人",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["評估病人意識狀況，且目視病人胸部有無起伏。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "叫：呼救",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["院外 : 指定專人打119。\n院內 : 叫急救車及尋求電擊器，請求更多人協助。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "C：檢查脈搏",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["以食指、中指摸頸動脈(喉結旁一公分凹陷處)。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "A：打開呼吸道",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["無外傷 : 壓額抬下巴法。\n有外傷 : 下顎上提法。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "B：檢查呼吸",
+			"url" : ["01_cpr/cpr_step_5.png"],
+			"description" : ["看：胸部起伏。\n聽：呼吸聲。\n無呼吸：吹兩口氣（1秒/每次）、觀察胸部起伏。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "D：AED(Automated external defibrillator)",
+			"url" : ["01_cpr/cpr_step_6.png"],
+			"description" : ["口訣 開、貼、插、電。\n裝置好，將貼片貼於病人身上。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

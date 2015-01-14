@@ -1,0 +1,23 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "手抽筋",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["慢慢拉直發生抽筋的手指，然後輕輕施力按摩，直至症狀緩解。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "大腿抽筋",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["先將膝部拉直，一手放在腳跟下，抬高腿部，而另一手按壓膝部輕輕按摩抽筋的肌肉，直至症狀緩解。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "小腿抽筋",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["小心地伸直膝蓋，接著輕輕抬起腿部，將腳掌向上屈，慢慢壓向小腿，輕輕按摩抽筋的肌肉，直至症狀緩解。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

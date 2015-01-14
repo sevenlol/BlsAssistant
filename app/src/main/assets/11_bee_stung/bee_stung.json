@@ -1,0 +1,29 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["迅速檢視身上被螫傷的部位，如發現有尾針留在上面，應用針或乾淨的尖銳物移除，小心勿擠壓到毒液囊。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["盡可能患肢抬高、冰敷來減少疼痛與腫脹也都有不錯效果。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["觀察患者是否出現全身性的症狀如：呼吸困難，全身或臉部浮腫，呼吸道阻塞而發出哮吼的聲音, 血壓下降，脈搏淺快，四肢冰冷及臉色蒼白，意識不清或昏迷。\n此類病人可能死於休克或呼吸道阻塞, 應立即就地尋覓安全處所，並讓傷者躺臥。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["檢查生命徵象 如有異常，應立即施以心肺復甦術(請見CPR)。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

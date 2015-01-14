@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["讓病患用力咳嗽將異物咳出時，請先在旁觀察病患狀況。\n拍背:可能會讓異物卡得更深，勿拍背。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["若無法咳出或無法說話，即可告知病患並開始哈姆力克法。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["施救者站在傷患背後呈弓箭步，前腳置於傷患雙腳間，兩手環繞其腰部。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["一手握拳將拇指與食指側朝內，放在傷患肚臍上方的位置。另一手握緊拳頭，快速向內向上擠壓，使橫隔膜突然向上壓迫肺部以噴出阻塞氣管內的異物。 重複施行直到異物排出。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["若異物無法排出且傷患陷入昏迷，採CPR步驟，仍可藉胸腔壓力幫助異物擠出氣管。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟六",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["呼叫119。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

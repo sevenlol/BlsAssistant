@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["將所有門窗全部統統打開，讓空氣流通，降低一氧化碳的濃度。\n或將病患移離一氧化碳的環境。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["勿碰觸室內任何家電的開關，以防通電後產生火花而引起爆炸。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["移往通風處後，助其鬆開其衣服，保持仰臥姿勢。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["將中毒者的頭部往後仰，使其氣道暢通。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["檢查中毒者的生命徵象，中毒者若還有呼吸時，趕緊以毛毯保溫。\n且在第一時迅速就醫，呼叫119。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟六",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["萬一中毒者已無呼吸時，先行施以心肺復甦術，另一面則趕緊呼叫救護車(請見CPR)。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

@@ -1,0 +1,35 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["疑似食物中毒之時，不再吃任何東西。\n保留糞便 : 先別急著止瀉有便意就去廁所。\n保留食物、嘔吐物、排泄物，留存於冰箱(冷藏，不可冷凍)。\n以供衛生單位檢驗之用。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["勿使用任何藥品、水分或食物，以免增加腸胃負擔。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["若腹痛又乾嘔不止，可以輕輕按摩胃區，或以手指扣喉催吐，使內容物排空， 同時增加腸胃蠕動，以方便排泄。\n催吐 : 先給患者喝下大量的開水，以手指或湯匙壓迫喉嚨底部，嘔吐時並應使患者臉部朝下，頭部壓低，以免嘔吐物阻塞呼吸道。\n但有兩類毒物不能催吐!\n1. 有腐蝕性的毒物如硫酸、鹽酸。\n2. 石油類毒物如汽油、機油、乾洗油。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["儘速送醫，打點滴、補充鹽水、以防虛脫休克，亦可經大便檢查，找出原因，以決定治療方向。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["醫療院(所)發現食品中毒病患，應在二十四小時內通知衛生單位。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

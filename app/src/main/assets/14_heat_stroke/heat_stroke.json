@@ -1,0 +1,29 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "症狀",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["患者出現體溫高達攝氏40度以上、皮膚乾燥灼熱與潮紅、頭痛、昏眩、脈摶強而快，嚴重可能虛脫昏迷。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["將患者移到陰涼處或冷氣房。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["立刻降低患者體溫：採冷水浴或脫去衣物，用濕泠的床單包住並加電扇和搧風以使體溫降至攝氏38度為止。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["如果患者昏迷，但呼吸正常，則採側臥之復甦姿勢，處理過程中儘速送醫。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

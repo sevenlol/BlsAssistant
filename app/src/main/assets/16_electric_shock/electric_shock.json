@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["先了解自己有無觸電的危險，千萬不要冒冒然地接觸患者，以防自己也遭到傷害。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["不論無觸電的危險，施救者都要戴上塑膠手套、穿雨鞋等絕緣物，再用木棒或其他不導電的物體來移除電源。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["將電源開關關掉，並讓觸電者遠離電源處。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["觀察觸電者是否呼吸已經停止，必要時請立刻進行人工呼吸急救。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟五",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["觸電者的心臟萬一停止跳動，則要做心肺復甦術。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+    		"title" : "步驟六",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["趕緊呼叫救護車並送醫治療。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

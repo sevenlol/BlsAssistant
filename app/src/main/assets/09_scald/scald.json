@@ -1,0 +1,29 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["迅速以流動的清水沖洗，或將受傷部位浸泡於冷水內降溫（10-15min)，直到沒有痛與熱的感覺。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["可以一面澆水，一面褪去衣物。\n必要時可以使用剪刀剪開衣服，但要儘量避免弄破傷口之水泡。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["繼續浸泡於冷水，可減輕疼痛及穩定情緒。\n若是化學藥物灼傷，持續用大量流動清水沖洗，並趕緊就醫。\n勿在燙傷的地方塗上味噌、醬油。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["極小之燙傷可以自理。若傷勢較大，則最好轉送到設置有燙傷中心的醫院治療。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

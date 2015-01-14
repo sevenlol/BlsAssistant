@@ -1,0 +1,53 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "症狀",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["感覺虛弱昏眩、焦慮不安、嘔吐、皮膚蒼白濕冷、呼吸淺而快、脈搏快而弱、甚至昏迷。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["先行將患者移到空氣流通處，讓患者能呼吸到充足之新鮮空氣。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["平躺姿勢，頭部偏向一側，腳部以毛毯、木箱等物墊高，增加患者心臟和腦部的血液供應。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["鬆開項部、胸部的衣物束縛。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["蓋毛毯保暖(不可使用熱水袋，避免因皮膚血管擴張使血液流向皮膚，使器官缺血嚴重)。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟五",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["依休克的不同原因加以處理，如出血者給予止血、骨折固定患肢以減輕疼痛。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟六",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["患者口渴用濕棉籤擦嘴唇，不可直接喝飲料。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟七",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["每10分鐘檢查呼吸、脈搏一次，必要時需施行心肺復甦術(請見CPR)，並立刻送醫處理。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

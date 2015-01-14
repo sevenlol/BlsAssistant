@@ -12,8 +12,127 @@
 			"title" : "CPR",
 			"filename" : "cpr.json",
 			"type" : "guide",
-			"path" : "cpr/",
+			"path" : "01_cpr/",
 			"short": "CPR short description"
+		},
+		{
+			"title" : "頭部外傷",
+			"filename" : "head_injury.json",
+			"type" : "guide",
+			"path" : "02_head_injury/",
+			"short": "CPR short description"
+		},
+		{
+			"title" : "氣喘急救",
+			"filename" : "asthma.json",
+			"type" : "guide",
+			"path" : "03_asthma/",
+			"short": "CPR short description"
+		},
+		{
+			"title" : "毒蛇咬傷",
+			"filename" : "snake_bite.json",
+			"type" : "guide",
+			"path" : "04_snake_bite/",
+			"short": "CPR short description"
+		},
+		{
+			"title" : "一氧化碳中毒",
+			"filename" : "carbon_monoxide.json",
+			"type" : "guide",
+			"path" : "05_carbon_monoxide/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "肌肉抽筋",
+			"filename" : "crick.json",
+			"type" : "guide",
+			"path" : "06_crick/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "食物中毒",
+			"filename" : "food_poisoning.json",
+			"type" : "guide",
+			"path" : "07_food_poisoning/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "癲癇",
+			"filename" : "epilepsy.json",
+			"type" : "guide",
+			"path" : "08_epilepsy/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "燙傷",
+			"filename" : "scald.json",
+			"type" : "guide",
+			"path" : "09_scald/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "暈倒",
+			"filename" : "faint.json",
+			"type" : "guide",
+			"path" : "10_faint/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "蜜蜂叮咬",
+			"filename" : "bee_stung.json",
+			"type" : "guide",
+			"path" : "11_bee_stung/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "食道異物梗塞",
+			"filename" : "esophagus_obstruction.json",
+			"type" : "guide",
+			"path" : "12_esophagus_obstruction/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "休克",
+			"filename" : "shock.json",
+			"type" : "guide",
+			"path" : "13_shock/",
+			"short": "Burn injury short description"
+		},		
+		{
+			"title" : "中暑",
+			"filename" : "heat_stroke.json",
+			"type" : "guide",
+			"path" : "14_heat_stroke/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "動物咬傷",
+			"filename" : "animal_bite.json",
+			"type" : "guide",
+			"path" : "15_animal_bite/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "觸電",
+			"filename" : "electric_shock.json",
+			"type" : "guide",
+			"path" : "16_electric_shock/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "斷肢",
+			"filename" : "amputative_limb.json",
+			"type" : "guide",
+			"path" : "17_amputative_limb/",
+			"short": "Burn injury short description"
+		},
+		{
+			"title" : "骨折",
+			"filename" : "bone_fracture.json",
+			"type" : "guide",
+			"path" : "18_bone_fracture/",
+			"short": "Burn injury short description"
 		},
 		{
 			"title" : "Burn Injury",

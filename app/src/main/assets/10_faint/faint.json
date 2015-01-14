@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["先行將患者移到空氣流通處。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["讓患者平躺或側臥並且將足部抬高，以增加患者心臟和腦部的血液供應。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["鬆開患者身上緊身的衣服，特別是圍繞頸部、胸部和腰部的衣物。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["以毛毯或被單蓋好患者身軀，避免患者過冷或過熱。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["觀察患者的生命徵象，如有需要，請施行人工呼吸或心肺復甦法(請見CPR)。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟六",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["呼叫119。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

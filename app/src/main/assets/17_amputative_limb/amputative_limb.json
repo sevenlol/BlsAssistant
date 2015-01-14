@@ -1,0 +1,23 @@
+{
+	"data" :
+	[
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["以直接加壓法為患者止血，必要時可於傷肢上方用止血帶。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["將斷肢用生理食鹽水濕紗布包好，放在乾淨的塑膠袋內，保持清潔低溫。可能的話放在冰桶中，但避免斷肢直接接觸冰。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : [" 袋子註明傷患姓名和斷肢事件發生時間，且儘快送醫。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

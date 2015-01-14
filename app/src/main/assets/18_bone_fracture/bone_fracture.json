@@ -1,0 +1,47 @@
+{
+	"data" :
+	[
+		{
+    		"title" : "症狀",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : [" 強烈疼痛、變形、活動困難，也可能看到凸出的折骨。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟一",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["首先要注意病者的全身情況，若有休克或呼吸受阻，請施行心肺復甦術(請見CPR)。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["如有傷口，用紗布或清潔布料覆蓋並予包紮。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟三",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["設法固定傷肢，以減輕疼痛，避免加重損傷。"],
+    		"order" : ["url", "description"]
+    	},
+    	{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["固定骨折可就地取材如木板，竹竿等，但其長度以超過上下兩關節為原則。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["若無適當材料時，上肢可包紮固定於胸壁，下肢可與未受傷的下肢綁在一起。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟六",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["萬一骨折的部位是脊椎骨時，應使病人平伏地面或硬板上，等待救護人員搬送到醫院。"],
+    		"order" : ["url", "description"]
+    	}
+	]
+}

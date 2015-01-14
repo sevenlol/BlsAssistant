@@ -3,13 +3,13 @@
 	[
 		{
 			"title" : "Burn Trement Step 1",
-			"url" : ["burn_injury/step1.jpg"],
+			"url" : ["cpr.3gp"],
 			"description" : ["Burn Trement Description 1."],
 			"order" : ["url", "description"]
 		},
 		{
 			"title" : "Burn Trement Step 2",
-			"url" : ["burn_injury/step2.jpg"],
+			"url" : ["test.3gp"],
 			"description" : ["Burn Trement Description 2."],
 			"order" : ["url", "description"]
 		}

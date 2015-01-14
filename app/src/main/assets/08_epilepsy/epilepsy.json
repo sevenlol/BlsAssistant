@@ -1,0 +1,35 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["盡量攙扶，防止跌倒損傷。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["避免病人受傷，拿個柔軟的物品協助病人躺下，勿拉手臂避免肩膀脫臼，眼鏡要取下來，鬆開緊貼衣物，將病人移到空曠處。\n發作後減少搬動，讓病人適當休息。\n神智不清時採取復甦體位使唾液或嘔吐物流出口外，防止窒息。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["勿強壓病人，怕傷及病人，產生肌肉拉傷或骨折。"],
+			"order" : ["url", "description"]
+		},
+		{
+    		"title" : "步驟四",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["協助病人呼吸，病人若是仰臥，當發作結束後可以推成側臥。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["癲癇發作完畢勿進行任何流質的進食，可能導致病人嗆到。\n發作過後，病人若仍呈現意識混亂狀態，勿急忙要求站立或行走。"],
+			"order" : ["url", "description"]
+		}
+	]
+}

@@ -1,0 +1,41 @@
+{
+	"data" :
+	[
+	    {
+    		"title" : "步驟一",
+    		"url" : ["01_cpr/cpr_step_1.png"],
+    		"description" : ["有明顯的嚴重受傷時，應先讓傷者側臥，並將環繞頸部胸部衣物鬆開。"],
+    		"order" : ["url", "description"]
+    	},
+		{
+			"title" : "步驟二",
+			"url" : ["01_cpr/cpr_step_2.png"],
+			"description" : ["注意患者是否呼吸通順，必要時施以心肺復甦術(請見CPR)。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟三",
+			"url" : ["01_cpr/cpr_step_3.png"],
+			"description" : ["若是患者的頸部也有受傷的可能時，應儘量避免移動。\n若有必要，請將頭頸及身軀保持於同一平面移動。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟四",
+			"url" : ["01_cpr/cpr_step_4.png"],
+			"description" : ["儘速呼叫119。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "步驟五",
+			"url" : ["01_cpr/cpr_step_5.png"],
+			"description" : ["應持續觀察至少四十八小時，以防腦部內部受到傷害而不知。"],
+			"order" : ["url", "description"]
+		},
+		{
+			"title" : "觀察重點",
+			"url" : ["01_cpr/cpr_step_6.png"],
+			"description" : ["1. 意識漸趨不清、言語困難\n2.	一側手腳較無力或漸趨癱瘓\n3. 手腳或嘴角抽筋\n4.	呼吸困難\n5. 劇烈頭痛\n6. 持續性嘔吐\n如無以上情況，請於2個月內往神經外科門診追蹤複查，以確保腦部正常。"],
+			"order" : ["url", "description"]
+		}
+	]
+}
