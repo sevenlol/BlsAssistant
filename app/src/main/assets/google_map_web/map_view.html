@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCXVaGdYMkavpAdFN7-j_65bAMRpmmdoYw"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 		<style>
@@ -18,9 +19,13 @@
     	<script type="text/javascript" src="infowindowarr_test.js"></script>
     	<!-- infobox object to display eta -->
     	<script type="text/javascript" src="infobox_packed.js"></script>
+    	<!-- aed database -->
+    	<script type="text/javascript" src="aed_search.js"></script>
+		<script type="text/javascript" src="aed_data/aed_data.js"></script>
+		<script type="text/javascript" src="aed_data/aed_database.js"></script>
 		<script>
 			var map;
-			var currentCoord = new Coord(25.0911,121.5598);
+			var currentCoord = new Coord(24.94975,121.35262);
 			var aedArr = [];
 			var markerArr = [];
 			var infoWindowArr = [];
@@ -28,17 +33,12 @@
 			var etaIconArr = [];
 			var directionsService = new google.maps.DirectionsService();
 
-			var httpCallBack = function(jsonStr, index){
-				alert("index: " + index);
-				alert("jsonStr: " + jsonStr);
-			};
-
 			function initialize() {
 				/**
 				 *  Google map initialization.
 				 */
   				var mapProp = {
-    				center:new google.maps.LatLng(25.0911,121.5598),
+    				center:new google.maps.LatLng(24.94975,121.35262),
     				zoom:14,
     				mapTypeId:google.maps.MapTypeId.ROADMAP
   				};
@@ -49,28 +49,26 @@
   				 *  test code that display three markers
   				 *  click on each marker pops up a infowindow
   				 */
-  				aedArr = testAedArr;
-  				//makeDirectionsRequest(currentCoord, aedArr[2], 2, "walking");
-  				calculateEtaAndUpdateArr("walking");
+  				// aedArr = testAedArr;
+  				// calculateEtaAndUpdateArr("walking");
+  				// markerArr = createMarkerTestArr(3);
+  				// infoWindowArr = createInfoWindowTestArr(3);
+  				// setInfoWindowListener();
+  				// setMarkers(map);
 
-  				
-  				markerArr = createMarkerTestArr(3);
-  				infoWindowArr = createInfoWindowTestArr(3);
-  				setInfoWindowListener();
-  				setMarkers(map);
   				/**
   				 * real code
   				 */
 
   				//placeholder for a function that updates currentCoord
 
-  				//loadData(currentCoord);
+  				loadData(currentCoord);
 
   				//updateInfoWindows();
 
   				//updateMarkers();
 
-  				//updateETAIcons(currentCoord);
+  				calculateEtaAndUpdateArr("walking");
 
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
@@ -83,6 +81,7 @@
 				 *                 location
 				 *  @modify aedArr
 				 */
+				aedArr = tempLoadData(coord);
 			}
 
 			function createInfoWindow(aed){
@@ -193,7 +192,13 @@
 
 				//calculate eta and update arrays
 				for (var i = 0; i < aedArr.length; i++) {
-					makeDirectionsRequest(currentCoord, aedArr[i], i, travelMode);
+					setTimeout((function(coord, aed, index, mode) {
+						return function(){
+							makeDirectionsRequest(coord, aed, index, mode);
+							// if (index == aedArr.length - 1)
+							// 	alert("done");
+						}
+					})(currentCoord, aedArr[i], i, travelMode), Math.floor(i/10) * 12000);
 				}
 			}
 
