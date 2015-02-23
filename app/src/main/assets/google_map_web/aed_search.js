@@ -14,6 +14,8 @@ function str2JSON(str) {
 	return JSON.parse(str);
 }
 
+
+// This is the function that does all the job to find the targeted AED data
 function tempLoadData(coord) {
 	var gridObj = str2JSON(aed_data);
 	gridInfo = new GridInfo(gridObj.lat_grid_start, gridObj.lat_grid_end, gridObj.lat_grid_unit, gridObj.lng_grid_start, gridObj.lng_grid_end, gridObj.lng_grid_unit);
@@ -69,6 +71,7 @@ function calcGridStartIndex(coord, ch) {
 	return resultIndexArr[ch];
 }
 
+// This function finds the grids that contains the targeted tempAEDInfoStr
 function findAllGrid(coord) {
 	var tempAED = new AED(0, 0, coord, 0, 0, 0);
 	var gridAnsArr = [];
@@ -176,14 +179,20 @@ function padZeros(num) {
 function aedData(idArr, coord) {
 	var tempAEDInfoStr;
 	var tempAEDJSON;
+	var tempAEDDist;
 	var tempAEDArr = [];
+	var tempAED = new AED(0, 0, coord, 0, 0, 0);
 
 	for(index = 0; index < idArr.length; index++) {
 		eval("tempAEDInfoStr = aed_" + padZeros(idArr[index]) + ";" );
 		//console.log("AED_Info" + tempAEDInfoStr);
 		tempAEDJSON = str2JSON(tempAEDInfoStr);
-		tempAEDArr.push(new AED(tempAEDJSON.id, tempAEDJSON.loc, new Coord(tempAEDJSON.lat, tempAEDJSON.lng), tempAEDJSON.addr, tempAEDJSON.img_url));
-		tempAEDArr[tempAEDArr.length - 1].dist2cur = dist(coord, new Coord(tempAEDJSON.lat, tempAEDJSON.lng));
+		tempAEDDist = dist(coord, new Coord(tempAEDJSON.lat, tempAEDJSON.lng));
+		console.log("dist2cur: " + tempAEDDist);
+		if(tempAEDDist <= tempAED.NEIGHBOR_DIST_THRESHOLD) {
+			tempAEDArr.push(new AED(tempAEDJSON.id, tempAEDJSON.loc, new Coord(tempAEDJSON.lat, tempAEDJSON.lng), tempAEDJSON.addr, tempAEDJSON.img_url));
+			tempAEDArr[tempAEDArr.length - 1].dist2cur = tempAEDDist;
+		}
 	}
 	return tempAEDArr;
 }

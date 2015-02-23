@@ -23,11 +23,14 @@
     	<script type="text/javascript" src="aed_search.js"></script>
 		<script type="text/javascript" src="aed_data/aed_data.js"></script>
 		<script type="text/javascript" src="aed_data/aed_database.js"></script>
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 		<script>
 			var map;
 			var currentCoord = new Coord(24.94975,121.35262);
 			var aedArr = [];
 			var markerArr = [];
+			var currLocMarker;
 			var infoWindowArr = [];
 			var etaArr = [];
 			var etaIconArr = [];
@@ -39,7 +42,7 @@
 				 */
   				var mapProp = {
     				center:new google.maps.LatLng(24.94975,121.35262),
-    				zoom:14,
+    				zoom:15,
     				mapTypeId:google.maps.MapTypeId.ROADMAP
   				};
   				map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
@@ -62,17 +65,50 @@
 
   				//placeholder for a function that updates currentCoord
 
-  				loadData(currentCoord);
-
-  				//updateInfoWindows();
-
-  				//updateMarkers();
-
-  				calculateEtaAndUpdateArr("walking");
+  				if (navigator.geolocation) {
+        			navigator.geolocation.getCurrentPosition(updateMap, error);
+    			} else {
+        			x.innerHTML = "Geolocation is not supported by this browser.";
+    			}
 
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
 
+			function error(msg) {
+				// alert(msg.code);
+			}
+
+			function updateMap(position) {
+				currentCoord.lat = position.coords.latitude;
+				currentCoord.lng = position.coords.longitude;
+
+				var centerLatLng = new google.maps.LatLng(currentCoord.lat, currentCoord.lng)
+				map.setCenter(centerLatLng);
+
+				if (currLocMarker != null) {
+					currLocMarker.setMap(null);
+				}
+
+				currLocMarker = new google.maps.Marker({
+										position: centerLatLng,
+										map: null,
+										title: "現在位置",
+										icon: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+									});
+				currLocMarker.setMap(map);
+				var infoWindow = new google.maps.InfoWindow({
+					content: "您現在所在位置"
+				});
+				infoWindow.open(map, currLocMarker);
+
+				loadData(currentCoord);
+
+  				updateInfoWindows();
+
+  				updateMarkers();
+
+  				calculateEtaAndUpdateArr("walking");
+			}
 
 			function loadData(coord){
 				/** load AED data from files and modify aedArr
@@ -92,6 +128,14 @@
 				 *  @return      the created InfoWindow object
 				 */
 
+				var contentStr = "<h4>位置： " + aed.location + "</h4>";
+
+				contentStr += "<h4>地址： " + aed.addr + "</h4>";
+
+				var infoWindow = new google.maps.InfoWindow({
+					content: contentStr
+				});
+				return infoWindow;
 			}
 
 			function updateInfoWindows(){
@@ -120,6 +164,17 @@
 				 *                     is clicked
 				 *  @return            generated marker
 				 */
+
+				var AED_ICON_PATH = "icon/aed/aed-32.png";
+				var latLng = new google.maps.LatLng(aed.coord.lat, aed.coord.lng);
+				var marker = new google.maps.Marker({
+					position: latLng,
+					map: null,
+					title: aed.location,
+					icon: AED_ICON_PATH
+				});
+
+				return marker;
 			}
 
 			function updateMarkers(){
@@ -293,9 +348,11 @@
 				 */
 
 				var boxText = document.createElement("div");
-				boxText.style.cssText = "font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif;background-color:#9B4A4A;-webkit-border-radius: 8px;height:25px;padding:0px;margin:0px;";
-				var labelText = "<div style=\"margin:auto;\">";
-				labelText += "<img src=\"icon/walking-white.svg\" style=\"height:16px;width:12px;margin-left:8px;margin-top:3px;float:left;\"><p style=\"margin: auto;padding-top:2px;\">" + secToTimeStr(eta) + "</p></div>";
+				// boxText.style.cssText = "font-family:\"Lucida Sans Unicode\", \"Lucida Grande\", sans-serif;background-color:#9B4A4A;-webkit-border-radius: 8px;height:25px;padding:0px;margin:0px;";
+				// var labelText = "<div style=\"margin:auto;\">";
+				// labelText += "<img src=\"icon/walking-white.svg\" style=\"height:16px;width:12px;margin-left:8px;margin-top:3px;float:left;\"><p style=\"margin: auto;padding-top:2px;\">" + secToTimeStr(eta) + "</p></div>";
+				var labelText = "<span class=\"label label-danger\">";
+				labelText += secToTimeStr(eta) + "</span>";
 				boxText.innerHTML = labelText;
 				var centerLoc = new google.maps.LatLng(coord.lat, coord.lng);
 
@@ -339,7 +396,12 @@
     			if (hours   < 10) {hours   = "0"+hours;}
     			if (minutes < 10) {minutes = "0"+minutes;}
    				if (seconds < 10) {seconds = "0"+seconds;}
-    			var time    = hours+'h'+minutes+'m';
+    			var time    = minutes+'m'+seconds+'s';
+
+    			if (hours > 1 || minutes >= 20) {
+    				time = ">20min";
+    			}
+
     			return time;
 			}
 		</script>

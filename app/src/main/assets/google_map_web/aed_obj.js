@@ -11,7 +11,7 @@ var AED = function(id, location, coord, addr, imgUrlArr){
 	this.coord = coord;
 	this.addr = addr;
 	this.imgUrlArr = imgUrlArr;
-	this.NEIGHBOR_DIST_THRESHOLD = 2; //2 km
+	this.NEIGHBOR_DIST_THRESHOLD = 1; //2 km
 	this.dist2cur = -1;
 };
 
